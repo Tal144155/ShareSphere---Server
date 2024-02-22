@@ -1,6 +1,11 @@
 const User = require("../models/user");
 
 const createUser = async (user_name, password, first_name, last_name, pic) => {
+  const existingUser = await checkUserName(user_name);
+  if (existingUser.length > 0) {
+    console.log("User with this username already exists.");
+    return null;
+  }
   const user = new User({
     user_name: user_name,
     password: password,
@@ -11,6 +16,8 @@ const createUser = async (user_name, password, first_name, last_name, pic) => {
   return await user.save();
 };
 
-module.exports = {createUser};
+const checkUserName = async (user_name) => {
+  return await User.find({ user_name: user_name });
+};
 
-
+module.exports = { createUser };
