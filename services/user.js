@@ -11,4 +11,6 @@ const createUser = async (user_name, password, first_name, last_name, pic) => {
   return await user.save();
 };
 
+module.exports = {createUser};
+
 
