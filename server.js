@@ -33,7 +33,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 
 //connecting to router
 const users = require("./routes/user");
-app.use("/api", users);
+app.use("/api/users", users);
 
 //port listening to
 app.listen(process.env.PORT);
