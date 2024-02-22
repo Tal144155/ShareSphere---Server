@@ -30,11 +30,11 @@ function isLoggedIn(req, res, next) {
             // Token validation was successful. Continue to the actual function
             return next()
         } catch (err) {
-            return res.status(401).send("Invalid Token");
+            return res.status(401).json( { error: "Invalid Token" } );
         }
     }
     else
-        return res.status(403).send('Token required');
+        return res.status(403).json( { error: 'Token required' } );
 }
 
 module.exports = {
