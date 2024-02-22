@@ -2,19 +2,19 @@
 const express = require("express");
 
 //creating the app
-var app = express();
+var server = express();
 
 //using body parser and sending answeres as json
 const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(express.json());
 
 //showing files from public directory
-app.use(express.static("public"));
+server.use(express.static("public"));
 
 //using the cors
 const cors = require("cors");
-app.use(cors());
+server.use(cors());
 
 //using mongoose on server
 const mongoose = require("mongoose");
@@ -33,7 +33,9 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 
 //connecting to router
 const users = require("./routes/user");
-app.use("/api/users", users);
+server.use("/api/users", users);
+const tokensRouter = require('./routes/token')
+server.use('/api/tokens', tokensRouter)
 
 //port listening to
-app.listen(process.env.PORT);
+server.listen(process.env.PORT);

@@ -21,4 +21,12 @@ const getUserName = async (user_name) => {
   return await User.find({ user_name: user_name });
 };
 
-module.exports = { createUser };
+async function isSigned(user_name, password) {
+  let user = await User.findOne({ user_name, password });
+  // Check if user exists
+  if (!user)
+    return false;
+  return true;
+}
+
+module.exports = { createUser, isSigned };
