@@ -15,4 +15,13 @@ const createUser = async (req, res) => {
   }
 };
 
+//need to send without the password!!
+//jwt needs to be attached and checked
+const getUser = async (req, res) => {
+  const user = await userService.getUserName(req.params.id);
+  if (!user) {
+    res.status(404);
+  }
+};
+
 module.exports = { createUser };
