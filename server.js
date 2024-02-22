@@ -1,26 +1,41 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const tokensRouter = require('./routes/token')
-const cors = require('cors')
+//using express module to create server
+const express = require("express");
 
-const customEnv = require('custom-env')
-customEnv.env(process.env.NODE_ENV, './config')
+//creating the app
+var server = express();
 
-const mongoose = require('mongoose')
-mongoose.connect(process.env.CONNECTION_STRING, 
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-
-var server = express()
-// Middleware to parse incoming request bodies
+//using body parser and sending answeres as json
+const bodyParser = require("body-parser");
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(express.json())
-server.use(cors())
+server.use(express.json());
 
-server.use(express.static('public'))
+//showing files from public directory
+server.use(express.static("public"));
 
+//using the cors
+const cors = require("cors");
+server.use(cors());
+
+//using mongoose on server
+const mongoose = require("mongoose");
+
+//creating the custom env
+const customENV = require("custom-env");
+
+//connecting to env wanted
+customENV.env(process.env.NODE_ENV, "./config");
+
+//connecting to mongoDB
+mongoose.connect(process.env.CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+//connecting to router
+const users = require("./routes/user");
+server.use("/api/users", users);
+const tokensRouter = require('./routes/token')
 server.use('/api/tokens', tokensRouter)
 
-server.listen(process.env.PORT)
+//port listening to
+server.listen(process.env.PORT);
