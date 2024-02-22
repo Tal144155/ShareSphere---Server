@@ -1,11 +1,9 @@
-const { model } = require("mongoose");
 const userController = require("../controllers/user");
 
 const express = require("express");
 
-var router = express.Router;
+var router = express.Router();
 
-router.route('/')
-    .post(userController.createUser);
+router.route("/users").post(userController.createUser);
 
 module.exports = router;
