@@ -21,6 +21,6 @@ server.use(cors())
 
 server.use(express.static('public'))
 
-server.use('/tokens', tokensRouter)
+server.use('/api/tokens', tokensRouter)
 
 server.listen(process.env.PORT)

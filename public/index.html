@@ -16,7 +16,7 @@
                 password: document.getElementsByTagName('input')[1].value
             };
 
-            const res = await fetch('http://localhost:80/tokens', {
+            const res = await fetch('http://localhost:80/api/tokens', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
