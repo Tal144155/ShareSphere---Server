@@ -21,12 +21,25 @@ const getUserName = async (user_name) => {
   return await User.find({ user_name: user_name });
 };
 
+const getUserByUserName = async (user_name) => {
+  const user = await getUserName(user_name);
+  if (user.length == 0) {
+    return null;
+  }
+  const userToSend = {
+    user_name: user[0].user_name,
+    first_name: user[0].first_name,
+    last_name: user[0].last_name,
+    pic: user[0].pic,
+  };
+  return userToSend;
+};
+
 async function isSigned(user_name, password) {
   let user = await User.findOne({ user_name, password });
   // Check if user exists
-  if (!user) 
-    return false;
+  if (!user) return false;
   return true;
 }
 
-module.exports = { createUser, isSigned, getUserName };
+module.exports = { createUser, isSigned, getUserName, getUserByUserName };

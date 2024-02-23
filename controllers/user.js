@@ -9,7 +9,7 @@ const createUser = async (req, res) => {
     req.body.pic
   );
   if (newUser != null) {
-    res.json(newUser);
+    return res.status(201).json({ message: ["user added succesfully"] });
   } else {
     return res.status(409).json({ error: ["user name already exists"] });
   }
@@ -17,11 +17,13 @@ const createUser = async (req, res) => {
 
 //need to send without the password!!
 //jwt needs to be attached and checked
+//request has the jwt, needs to be extracted and checked that match.
 const getUser = async (req, res) => {
-  const user = await userService.getUserName(req.params.id);
-  if (!user) {
-    res.status(404);
+  const user = await userService.getUserByUserName(req.params.id);
+  if (user == null) {
+    return res.status(404).json({ error: ["user not found"] });
   }
+  res.json(user);
 };
 
-module.exports = { createUser };
+module.exports = { createUser, getUser };
