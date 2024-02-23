@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <input type="text" name="username">
-    <input type="password" name="password">
+  </head>
+  <body>
+    <input type="text" name="username" />
+    <input type="password" name="password" />
     <button onclick="getToken()">get token</button>
+    <button onclick="getUserCheck()">checkgetuser</button>
     <script>
-        async function getToken() {
-            let data = {
-                username: document.getElementsByTagName('input')[0].value,
-                password: document.getElementsByTagName('input')[1].value
-            };
+      let token;
+      async function getToken() {
+        let data = {
+          username: document.getElementsByTagName("input")[0].value,
+          password: document.getElementsByTagName("input")[1].value,
+        };
 
-            const res = await fetch('http://localhost:80/api/tokens', {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-        }
+        const response = await fetch("http://localhost:8080/api/tokens", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const responseData = await response.json();
+        token = responseData.token;
+      }
+
+      async function getUserCheck() {
+
+        const response = await fetch("http://localhost:8080/api/users/tal", {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+
+        const userData = await response.json();
+        console.log(userData);
+      }
     </script>
-</body>
+  </body>
 </html>
-
-
-<!-- let data = {
-    username: document.getElementsByTagName('input')[0],
-    password: document.getElementsByTagName('input')[1]
-} -->
