@@ -3,7 +3,6 @@ const User = require("../models/user");
 const createUser = async (user_name, password, first_name, last_name, pic) => {
   const existingUser = await getUserName(user_name);
   if (existingUser.length > 0) {
-    console.log("User with this username already exists.");
     return null;
   }
   const user = new User({
@@ -35,6 +34,14 @@ const getUserByUserName = async (user_name) => {
   return userToSend;
 };
 
+const deleteUser = async (user_name) => {
+  const user = await User.findOneAndDelete({ user_name: user_name });
+  if (!user) {
+    return false;
+  }
+  return true;
+};
+
 async function isSigned(user_name, password) {
   let user = await User.findOne({ user_name, password });
   // Check if user exists
@@ -42,4 +49,10 @@ async function isSigned(user_name, password) {
   return true;
 }
 
-module.exports = { createUser, isSigned, getUserName, getUserByUserName };
+module.exports = {
+  createUser,
+  isSigned,
+  getUserName,
+  getUserByUserName,
+  deleteUser,
+};
