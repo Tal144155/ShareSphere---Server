@@ -17,12 +17,13 @@
     <button onclick="getFriends()">get friends</button>
     <button onclick="friendRequest()">friend request</button>
     <button onclick="approveFriendRequest()">approve friend request</button>
+    <button onclick="unfriend()">unfriend</button>
     <script>
         let token;
         async function getToken() {
             let data = {
-                username: document.getElementsByTagName("input")[0].value,
-                password: document.getElementsByTagName("input")[1].value,
+                username: document.getElementsByName("username")[0].value,
+                password: document.getElementsByName("password")[0].value,
             };
 
             const response = await fetch("http://localhost:8080/api/tokens", {
@@ -38,7 +39,7 @@
         }
 
         async function getUserCheck() {
-            let data = document.getElementsByTagName("input")[0].value;
+            let data = document.getElementsByName("username")[0].value;
             const response = await fetch(
                 "http://localhost:8080/api/users/" + data,
                 {
@@ -52,7 +53,7 @@
         }
 
         async function deleteUser() {
-            let data = document.getElementsByTagName("input")[0].value;
+            let data = document.getElementsByName("username")[0].value;
             const response = await fetch(
                 "http://localhost:8080/api/users/" + data,
                 {
@@ -67,8 +68,8 @@
         }
 
         async function getFriends() {
-            let username = document.getElementsByTagName("input")[0].value;
-            let req_user_name = 'yael'
+            let username = document.getElementsByName("username")[0].value;
+            let req_user_name = document.getElementsByName("friend")[0].value
             const response = await fetch("http://localhost:8080/api/users/" + username + "/friends",
                 {
                     method: "get",
@@ -83,8 +84,8 @@
         }
 
         async function friendRequest() {
-            let username = document.getElementsByTagName("input")[0].value;
-            let req_user_name = 'l'
+            let username = document.getElementsByName("username")[0].value;
+            let req_user_name = document.getElementsByName("friend")[0].value
             const response = await fetch("http://localhost:8080/api/users/" + username + "/friends",
                 {
                     method: "post",
@@ -121,6 +122,22 @@
             } catch (error) {
                 console.error("Error:", error);
             }
+        }
+
+        async function unfriend() {
+            let username = document.getElementsByName("username")[0].value;
+            let friend = document.getElementsByName("friend")[0].value;
+            const response = await fetch(`http://localhost:8080/api/users/${username}/friends/${friend}`,
+                {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: token,
+                    },
+                });
+            const userData = await response.json();
+            console.log(userData)
+
         }
     </script>
 </body>

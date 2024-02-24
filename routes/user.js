@@ -9,6 +9,7 @@ const tokenModel = require('../models/token')
 
 router.route('/:id/friends/:fid')
     .patch(tokenModel.isLoggedIn, friendController.approveFriendRequest)
+    .delete(tokenModel.isLoggedIn, friendController.deleteFriend)
     
 router.route('/:id/friends')
     .get(tokenModel.isLoggedIn, friendController.getFriends)
@@ -18,4 +19,3 @@ router.route("/").post(userController.createUser);
 
 module.exports = router;
 
-//.delete(tokenModel.isLoggedIn, friendController.deleteFriend)
