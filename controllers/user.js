@@ -36,7 +36,6 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log("Hello");
   const user_name = req.params.id;
   const first_name = req.body.firstname;
   const last_name = req.body.lastname;

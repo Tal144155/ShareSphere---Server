@@ -7,10 +7,10 @@ var router = express.Router();
 
 router.route("/").post(userController.createUser);
 
-router.route("/:id").get(tokenModel.isLoggedIn, userController.getUser);
-
-router.route("/:id").delete(tokenModel.isLoggedIn, userController.deleteUser);
-
-router.route("/:id").patch(tokenModel.isLoggedIn, userController.updateUser);
+router
+  .route("/:id")
+  .get(tokenModel.isLoggedIn, userController.getUser)
+  .delete(tokenModel.isLoggedIn, userController.deleteUser)
+  .patch(tokenModel.isLoggedIn, userController.updateUser);
 
 module.exports = router;
