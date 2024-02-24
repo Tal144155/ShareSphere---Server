@@ -35,4 +35,23 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUser, deleteUser };
+const updateUser = async (req, res) => {
+  console.log("Hello");
+  const user_name = req.params.id;
+  const first_name = req.body.firstname;
+  const last_name = req.body.lastname;
+  const pic = req.body.pic;
+  const updatedUser = await userService.updateUser(
+    user_name,
+    first_name,
+    last_name,
+    pic
+  );
+  if (updatedUser) {
+    return res.status(200).json({ message: ["User has been updated"] });
+  } else {
+    return res.status(404).json({ error: ["User not found"] });
+  }
+};
+
+module.exports = { createUser, getUser, deleteUser, updateUser };

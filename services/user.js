@@ -42,6 +42,25 @@ const deleteUser = async (user_name) => {
   return true;
 };
 
+const updateUser = async (user_name, first_name, last_name, pic) => {
+  const updateFields = {
+    first_name: first_name,
+    last_name: last_name,
+    pic: pic,
+  };
+  const updatedUser = await User.findOneAndUpdate(
+    { user_name: user_name },
+    { $set: updateFields },
+    { new: true }
+  );
+
+  if (updatedUser) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 async function isSigned(user_name, password) {
   let user = await User.findOne({ user_name, password });
   // Check if user exists
@@ -55,4 +74,5 @@ module.exports = {
   getUserName,
   getUserByUserName,
   deleteUser,
+  updateUser
 };

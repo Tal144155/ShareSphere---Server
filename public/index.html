@@ -10,7 +10,12 @@
     <input type="password" name="password" />
     <button onclick="getToken()">get token</button>
     <button onclick="getUserCheck()">checkgetuser</button>
-    <button onclick="deleteUser()">checkgetuser</button>
+    <button onclick="deleteUser()">delete user</button>
+    <h1>update your details</h1>
+    <input type="text" name="first name" />
+    <input type="password" name="last name" />
+    <input type="text" name="pic" />
+    <button onclick="updateUser()">update user</button>
     <script>
       let token;
       async function getToken() {
@@ -20,7 +25,7 @@
         };
 
         const response = await fetch("http://localhost:8080/api/tokens", {
-          method: "post",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -36,7 +41,7 @@
         const response = await fetch(
           "http://localhost:8080/api/users/" + data,
           {
-            method: "get",
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
@@ -50,7 +55,7 @@
         const response = await fetch(
           "http://localhost:8080/api/users/" + data,
           {
-            method: "delete",
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
@@ -58,6 +63,26 @@
           }
         );
         const userData = await response.json();
+      }
+
+      async function updateUser() {
+        let data = {
+          firstname: document.getElementsByTagName("input")[2].value,
+          lastname: document.getElementsByTagName("input")[3].value,
+          pic: document.getElementsByTagName("input")[4].value,
+        };
+        const response = await fetch(
+          "http://localhost:8080/api/users/" +
+            document.getElementsByTagName("input")[0].value,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify(data),
+          }
+        );
       }
     </script>
   </body>

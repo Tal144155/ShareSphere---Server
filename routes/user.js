@@ -11,4 +11,6 @@ router.route("/:id").get(tokenModel.isLoggedIn, userController.getUser);
 
 router.route("/:id").delete(tokenModel.isLoggedIn, userController.deleteUser);
 
+router.route("/:id").patch(tokenModel.isLoggedIn, userController.updateUser);
+
 module.exports = router;
