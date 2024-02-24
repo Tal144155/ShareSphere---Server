@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongoose/lib/schema");
 const User = require("../models/user");
 
 const createUser = async (user_name, password, first_name, last_name, pic) => {
@@ -29,4 +30,68 @@ async function isSigned(user_name, password) {
   return true;
 }
 
-module.exports = { createUser, isSigned };
+// Removes the user_fid from the given user's friend requests
+async function removeRequest(user_name, user_fid) {
+  try {
+    await User.updateOne(
+      { user_name }, // Match the user by its username
+      { $pull: { friend_requests: user_fid } }) // Remove the specified friend request from the array
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Adds the user_fid to the given user's friends
+async function addFriend(user, user_fid) {
+  try {
+    user.friends.push(user_fid);
+    await user.save();
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Removes the user_fid from the given user's friends
+async function deleteFriend(user_name, user_fid) {
+  try {
+    await User.updateOne(
+      { user_name }, // Match the user by its username
+      { $pull: { friends: user_fid } }) // Remove the specified friend from the array
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function getFriends(user) {
+  if (user.populated('friends') == undefined)
+    // Populate the 'friends' field of the user document
+    await user.populate('friends');
+  // Return the friends array
+  return user.friends
+}
+
+async function getFriendRequests(user) {
+  if (user.populated('friend_requests') == undefined)
+    // Populate the 'friend_requests' field of the user document
+    await user.populate('friend_requests');
+  // Return the friend requests array
+  return user.friend_requests
+}
+
+// Search for the friend id in the friends array of the user
+function isFriend(user, friend_id) {
+    const friendIndex = user.friends.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
+    return friendIndex !== -1
+}
+
+// Search for the friend id in the friend requests array of the user and return it
+function isRequested(user, friend_id) {
+    const friendIndex = user.friend_requests.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
+    return friendIndex !== -1
+}
+
+
+module.exports = { createUser, isSigned, removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests };
