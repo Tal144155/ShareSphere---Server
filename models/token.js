@@ -21,7 +21,7 @@ function isLoggedIn(req, res, next) {
     // If the request has an authorization header
     if (req.headers.authorization) {
         // Extract the token from that header
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.headers.authorization;
         try {
             // Verify the token is valid
             const data = jwt.verify(token, key);
