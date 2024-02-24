@@ -32,23 +32,31 @@
       }
 
       async function getUserCheck() {
-        const response = await fetch("http://localhost:8080/api/users/tal", {
-          method: "get",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        });
+        let data = document.getElementsByTagName("input")[0].value;
+        const response = await fetch(
+          "http://localhost:8080/api/users/" + data,
+          {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
       }
 
       async function deleteUser() {
-        const response = await fetch("http://localhost:8080/api/users/12", {
-          method: "delete",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        });
+        let data = document.getElementsByTagName("input")[0].value;
+        const response = await fetch(
+          "http://localhost:8080/api/users/" + data,
+          {
+            method: "delete",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
         const userData = await response.json();
       }
     </script>

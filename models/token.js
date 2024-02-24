@@ -25,8 +25,6 @@ function isLoggedIn(req, res, next) {
     try {
       // Verify the token is valid
       const data = jwt.verify(token, key);
-      // remove this line
-      console.log("The logged in user is: " + data.username);
       // Token validation was successful. Continue to the actual function
       return next();
     } catch (err) {
