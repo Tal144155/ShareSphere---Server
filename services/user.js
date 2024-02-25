@@ -36,11 +36,25 @@ const getUserByUserName = async (user_name) => {
 };
 
 const deleteUser = async (user_name) => {
-  const user = await User.findOneAndDelete({ user_name: user_name });
-  if (!user) {
-    return false;
+  const userToDelete = await User.findOne({ user_name: user_name });
+  if (userToDelete) {
+    const user = await User.findOneAndDelete({ user_name: user_name });
+    if (!user) {
+      return false;
+    }
+    const deletedUserId = userToDelete._id;
+    await User.updateMany(
+      { friends: deletedUserId },
+      { $pull: { friends: deletedUserId } }
+    );
+    // Remove from friend_requests
+    await User.updateMany(
+      { friend_requests: deletedUserId },
+      { $pull: { friend_requests: deletedUserId } }
+    );
+    return true;
   }
-  return true;
+  return false;
 };
 
 const updateUser = async (user_name, first_name, last_name, pic) => {
@@ -69,13 +83,13 @@ async function isSigned(user_name, password) {
   return true;
 }
 
-
 // Removes the user_fid from the given user's friend requests
 async function removeRequest(user_name, user_fid) {
   try {
     await User.updateOne(
       { user_name }, // Match the user by its username
-      { $pull: { friend_requests: user_fid } }) // Remove the specified friend request from the array
+      { $pull: { friend_requests: user_fid } }
+    ); // Remove the specified friend request from the array
     return true;
   } catch (error) {
     return false;
@@ -98,7 +112,8 @@ async function deleteFriend(user_name, user_fid) {
   try {
     await User.updateOne(
       { user_name }, // Match the user by its username
-      { $pull: { friends: user_fid } }) // Remove the specified friend from the array
+      { $pull: { friends: user_fid } }
+    ); // Remove the specified friend from the array
     return true;
   } catch (error) {
     return false;
@@ -106,35 +121,49 @@ async function deleteFriend(user_name, user_fid) {
 }
 
 async function getFriends(user) {
-  if (user.populated('friends') == undefined)
+  if (user.populated("friends") == undefined)
     // Populate the 'friends' field of the user document
-    await user.populate('friends');
+    await user.populate("friends");
   // Return the friends array
-  return user.friends
+  return user.friends;
 }
 
 async function getFriendRequests(user) {
-  if (user.populated('friend_requests') == undefined)
+  if (user.populated("friend_requests") == undefined)
     // Populate the 'friend_requests' field of the user document
-    await user.populate('friend_requests');
+    await user.populate("friend_requests");
   // Return the friend requests array
-  return user.friend_requests
+  return user.friend_requests;
 }
 
 // Search for the friend id in the friends array of the user
 function isFriend(user, friend_id) {
-    const friendIndex = user.friends.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
-    return friendIndex !== -1
+  const friendIndex = user.friends.findIndex(
+    (ObjectId) => ObjectId.toString() === friend_id.toString()
+  );
+  return friendIndex !== -1;
 }
 
 // Search for the friend id in the friend requests array of the user and return it
 function isRequested(user, friend_id) {
-    const friendIndex = user.friend_requests.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
-    return friendIndex !== -1
+  const friendIndex = user.friend_requests.findIndex(
+    (ObjectId) => ObjectId.toString() === friend_id.toString()
+  );
+  return friendIndex !== -1;
 }
 
-
-module.exports = { createUser, isSigned, removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, getUserName,
+module.exports = {
+  createUser,
+  isSigned,
+  removeRequest,
+  addFriend,
+  getFriends,
+  isFriend,
+  isRequested,
+  deleteFriend,
+  getFriendRequests,
+  getUserName,
   getUserByUserName,
   deleteUser,
-  updateUser };
+  updateUser,
+};
