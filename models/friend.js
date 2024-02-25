@@ -102,12 +102,20 @@ async function deleteFriend(user_name, friend_user_name) {
         return { code: 404, error: "This user doesn't exist!" };
     const friend = await User.findOne({ user_name: friend_user_name })
     if (!friend)
-        return { code: 404, error: "This user doesn't exist!" };
-    let hasWorked = await userService.deleteFriend(user_name, friend._id)
-    hasWorked = hasWorked && userService.deleteFriend(friend_user_name, user._id)
-    if (hasWorked)
-        return { code: 201, message: "You are no longer friends" }
-    return { code: 500, error: "Failed to delete friend" }
+        return { code: 404, error: "This requested user doesn't exist!" };
+
+    // Check if we need to delete a friend request or a friend
+    if (userService.isRequested(user, friend._id)) {
+        userService.removeRequest(user_name, friend._id)
+        return { code: 201, message: "Successfully removed friend request" }
+    } else {
+        // Delete the users from each others arrays of friends
+        let hasWorked = await userService.deleteFriend(user_name, friend._id)
+        hasWorked = hasWorked && userService.deleteFriend(friend_user_name, user._id)
+        if (hasWorked)
+            return { code: 201, message: "You are no longer friends" }
+        return { code: 500, error: "Failed to delete friend" }
+    }
 }
 
 
