@@ -29,6 +29,14 @@ const User = new Schema({
       ref: "User",
     },
   ],
+  friend_requests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
+
+
 
 module.exports = mongoose.model("User", User);

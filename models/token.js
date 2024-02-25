@@ -29,6 +29,7 @@ function isLoggedIn(req, res, next) {
       return next();
     } catch (err) {
       return res.status(401).json({ error: "Invalid Token" });
+
     }
   } else return res.status(403).json({ error: "Token required" });
 }
