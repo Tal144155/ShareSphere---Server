@@ -9,19 +9,18 @@ const createUser = async (req, res) => {
     req.body.pic
   );
   if (newUser != null) {
-    return res.status(201).json({ message: ["user added succesfully"] });
+    return res.status(201).json({ message: "User added succesfully" });
   } else {
-    return res.status(409).json({ error: ["user name already exists"] });
+    return res.status(409).json({ error: "User name already exists" });
   }
 };
 
-//need to send without the password!!
-//jwt needs to be attached and checked
-//request has the jwt, needs to be extracted and checked that match.
+
+// Request has the jwt, needs to be extracted and checked that match.
 const getUser = async (req, res) => {
   const user = await userService.getUserByUserName(req.params.id);
   if (user == null) {
-    return res.status(404).json({ error: ["user not found"] });
+    return res.status(404).json({ error: "User not found" });
   }
   res.json(user);
 };
@@ -29,9 +28,9 @@ const getUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const user = await userService.deleteUser(req.params.id);
   if (user) {
-    return res.status(200).json({ message: ["user has been deleted"] });
+    return res.status(200).json({ message: "User has been deleted" });
   } else {
-    return res.status(404).json({ error: ["user not found"] });
+    return res.status(404).json({ error: "User not found" });
   }
 };
 
@@ -47,9 +46,9 @@ const updateUser = async (req, res) => {
     pic
   );
   if (updatedUser) {
-    return res.status(200).json({ message: ["User has been updated"] });
+    return res.status(200).json({ message: "User has been updated" });
   } else {
-    return res.status(404).json({ error: ["User not found"] });
+    return res.status(404).json({ error: "User not found" });
   }
 };
 
