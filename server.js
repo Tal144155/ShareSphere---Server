@@ -34,6 +34,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 //connecting to router
 const users = require("./routes/user");
 server.use("/api/users", users);
+
 const tokensRouter = require('./routes/token')
 server.use('/api/tokens', tokensRouter)
 
