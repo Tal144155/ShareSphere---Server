@@ -123,18 +123,20 @@ async function getFriendRequests(user) {
 
 // Search for the friend id in the friends array of the user
 function isFriend(user, friend_id) {
-    const friendIndex = user.friends.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
-    return friendIndex !== -1
+  const friendIndex = user.friends.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
+  return friendIndex !== -1
 }
 
 // Search for the friend id in the friend requests array of the user and return it
 function isRequested(user, friend_id) {
-    const friendIndex = user.friend_requests.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
-    return friendIndex !== -1
+  const friendIndex = user.friend_requests.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
+  return friendIndex !== -1
 }
 
 
-module.exports = { createUser, isSigned, removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, getUserName,
+module.exports = {
+  createUser, isSigned, removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, getUserName,
   getUserByUserName,
   deleteUser,
-  updateUser };
+  updateUser
+};
