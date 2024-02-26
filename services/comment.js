@@ -15,68 +15,82 @@ const createComment = async (
     user_name: user_name,
     first_name: first_name,
     last_name: last_name,
-    pic: pic,
+    profile: pic,
     content: content,
   });
   //saving comment in the db
   const commentSaved = await comment.save();
   const commentId = commentSaved._id;
   //adding comment to the comments list in post
-  const post = await postService.getPostById(user_name, postid);
+  const post = await postService.getPostByPostId(postid);
   if (!post) {
     // Handle the case where the post with the given postid is not found
     return false;
   }
   post.comments.push(commentId);
-  post.comment_number++;
   //saving info
   await post.save();
   return true;
 };
 
 const getComment = async (cid) => {
-  const comment = await Comment.findById(cid);
-  if (comment) {
-    return comment;
+  try {
+    const comment = await Comment.findById(cid);
+    if (comment) {
+      return comment;
+    }
+    return null;
+  } catch (error) {
+    return null;
   }
-  return null;
 };
 
 //getting all comments of a ceirtian post
-const getComments = async (pid, user_name) => {
-  const post = await postService.getPostById(user_name, pid);
+const getComments = async (pid) => {
+  const post = await postService.getPostByPostId(pid);
   if (!post) {
     return null;
   }
-  return post.populate("comments");
+  const comments = await post.populate("comments");
+  return comments.comments;
 };
 
 //editing comments content
 const editComment = async (content, cid) => {
-  const updatedComment = await Comment.findOneAndUpdate(
-    { _id: cid },
-    { $set: { content: content } },
-    { new: true }
-  );
-  if (updatedComment) {
-    return true;
+  try {
+    const updatedComment = await Comment.findOneAndUpdate(
+      { _id: cid },
+      { $set: { content: content } },
+      { new: true }
+    );
+
+    if (updatedComment) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    return false;
   }
-  return false;
 };
 
 //deleting comment from post
 const deleteComment = async (pid, cid) => {
-  const deletedComment = await Comment.findOneAndDelete({ _id: cid });
-  if (!deletedComment) {
+  try {
+    const deletedComment = await Comment.findOneAndDelete({ _id: cid });
+    if (!deletedComment) {
+      return false;
+    }
+    const post = await Post.findByIdAndUpdate(pid, {
+      $pull: { comments: cid },
+    });
+
+    if (!post) {
+      return false;
+    }
+    return true;
+  } catch (error) {
     return false;
   }
-  const post = await Post.findByIdAndUpdate(pid, {
-    $pull: { comments: cid },
-  });
-  if (!post) {
-    return false;
-  }
-  return true;
 };
 
 module.exports = {

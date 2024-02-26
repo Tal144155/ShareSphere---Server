@@ -1,12 +1,14 @@
 const commentService = require("../services/comment");
+const userService = require("../services/user");
 
 const createComment = async (req, res) => {
+  const user = await userService.getUserByUserName(req.params.id);
   const commentSaved = commentService.createComment(
     req.params.pid,
     req.params.id,
-    req.body.first_name,
-    req.body.last_name,
-    req.body.pic,
+    user.first_name,
+    user.last_name,
+    user.pic,
     req.body.content
   );
   if (commentSaved) {
@@ -18,8 +20,7 @@ const createComment = async (req, res) => {
 
 const getComments = async (req, res) => {
   const postId = req.params.pid;
-  const user_name = req.params.id;
-  const commentsArray = commentService.getComments(postId, user_name);
+  const commentsArray = await commentService.getComments(postId);
   if (commentsArray == null) {
     return res.status(404).json({ error: "comment was not found" });
   }
@@ -33,7 +34,7 @@ const editComment = async (req, res) => {
   if (comment) {
     if (comment.user_name === user_name) {
       const updated = await commentService.editComment(
-        req.body.content,
+        req.headers.content,
         comment_id
       );
       if (updated) {
