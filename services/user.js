@@ -15,7 +15,6 @@ const createUser = async (user_name, password, first_name, last_name, pic) => {
   return await user.save();
 };
 
-//should be in models?
 const getUserName = async (user_name) => {
   return await User.find({ user_name: user_name });
 };
@@ -35,56 +34,73 @@ const getUserByUserName = async (user_name) => {
 };
 
 const deleteUser = async (user_name) => {
-  const userToDelete = await User.findOne({ user_name: user_name });
-  if (userToDelete) {
-    const user = await User.findOneAndDelete({ user_name: user_name });
-    if (!user) {
-      return false;
+  try {
+    const userToDelete = await User.findOne({ user_name: user_name });
+    if (userToDelete) {
+      const user = await User.findOneAndDelete({ user_name: user_name });
+      if (!user) {
+        return false;
+      }
+      const deletedUserId = userToDelete._id;
+      // Remove from friends
+      await User.updateMany(
+        { friends: deletedUserId },
+        { $pull: { friends: deletedUserId } }
+      );
+      // Remove from friend_requests
+      await User.updateMany(
+        { friend_requests: deletedUserId },
+        { $pull: { friend_requests: deletedUserId } }
+      );
+      return true;
     }
-    const deletedUserId = userToDelete._id;
-    await User.updateMany(
-      { friends: deletedUserId },
-      { $pull: { friends: deletedUserId } }
-    );
-    // Remove from friend_requests
-    await User.updateMany(
-      { friend_requests: deletedUserId },
-      { $pull: { friend_requests: deletedUserId } }
-    );
-    return true;
+    return false;
+  } catch (error) {
+    return false;
   }
-  return false;
 };
 
 const updateUser = async (user_name, first_name, last_name, pic) => {
-  const updateFields = {
-    first_name: first_name,
-    last_name: last_name,
-    pic: pic,
-  };
-  const updatedUser = await User.findOneAndUpdate(
-    { user_name: user_name },
-    { $set: updateFields },
-    { new: true }
-  );
+  try {
+    const updateFields = {
+      first_name: first_name,
+      last_name: last_name,
+      pic: pic,
+    };
 
-  if (updatedUser) {
-    return true;
-  } else {
+    const updatedUser = await User.findOneAndUpdate(
+      { user_name: user_name },
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (updatedUser) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
     return false;
   }
 };
 
 async function isSigned(user_name, password) {
-  let user = await User.findOne({ user_name, password });
-  // Check if user exists
-  if (!user) return false;
-  return true;
+  try {
+    let user = await User.findOne({ user_name, password });
+    if (!user) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 module.exports = {
-  createUser, isSigned, getUserName,
+  createUser,
+  isSigned,
+  getUserName,
   getUserByUserName,
   deleteUser,
-  updateUser
+  updateUser,
 };
