@@ -124,11 +124,15 @@ async function getUserPosts(req_user_name, user_name) {
 }
 
 async function getPostByPostId(postid) {
-  const post = await Post.findById(postid);
-  if (!post) {
+  try {
+    const post = await Post.findById(postid);
+    if (!post) {
+      return null;
+    }
+    return post;
+  } catch (error) {
     return null;
   }
-  return post;
 }
 
 module.exports = {

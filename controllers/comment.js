@@ -22,7 +22,7 @@ const getComments = async (req, res) => {
   const postId = req.params.pid;
   const commentsArray = await commentService.getComments(postId);
   if (commentsArray == null) {
-    return res.status(404).json({ error: "comment was not found" });
+    return res.status(404).json({ error: "post was not found" });
   }
   res.json(commentsArray);
 };
