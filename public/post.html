@@ -16,6 +16,7 @@
     <input name="profile" type="text" />
     <input name="content" type="text" />
     <input name="friend" type="text" />
+    <input name="pid" type="text"/>
     <button onclick="getToken()">get token</button>
     <button onclick="createPost()">create post</button>
     <button onclick="editPost()">edit post</button>
@@ -41,14 +42,7 @@
             token = responseData.token;
         }
 
-        let username = document.getElementsByName("username")[0].value;
-        let pid = "65dce4b7cc66e41ec28e9294";
-        let contentString = document.getElementsByName("content")[0].value;
-        let picString = document.getElementsByName("pic")[0].value;
-        let friend = document.getElementsByName("friend")[0].value;
-
         async function createPost() {
-            username = document.getElementsByName("username")[0].value;
             let post = {
                 user_name: username,
                 first_name: document.getElementsByName("firstname")[0].value,
@@ -69,11 +63,10 @@
         }
 
         async function editPost() {
-            username = document.getElementsByName("username")[0].value;
-            pid = '65dcf433f1e2c9daddffa820';
-            contentString = document.getElementsByName("content")[0].value;
-            picString = document.getElementsByName("pic")[0].value;
-            friend = document.getElementsByName("friend")[0].value;
+            let username = document.getElementsByName("username")[0].value;
+            let pid = document.getElementsByName("pid")[0].value;
+            let contentString = document.getElementsByName("content")[0].value;
+            let picString = document.getElementsByName("pic")[0].value;
             const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
                 method: "PATCH",
                 headers: {
@@ -87,11 +80,8 @@
         }
 
         async function deletePost() {
-            username = document.getElementsByName("username")[0].value;
-            pid = '65dcf433f1e2c9daddffa820';
-            contentString = document.getElementsByName("content")[0].value;
-            picString = document.getElementsByName("pic")[0].value;
-            friend = document.getElementsByName("friend")[0].value;
+            let username = document.getElementsByName("username")[0].value;
+            let pid = document.getElementsByName("pid")[0].value;
             const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
                 method: "delete",
                 headers: {
@@ -104,9 +94,7 @@
 
         async function getUsersPosts() {
             let user_name = document.getElementsByName("username")[0].value;
-            contentString = document.getElementsByName("content")[0].value;
-            picString = document.getElementsByName("pic")[0].value;
-            friend = document.getElementsByName("friend")[0].value;
+            let friend = document.getElementsByName("friend")[0].value;
             const reponse = await fetch(`http://localhost:8080/api/users/${user_name}/posts`, {
                 method: "GET",
                 headers: {
