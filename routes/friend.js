@@ -4,9 +4,6 @@ var router = express.Router()
 const friendController = require('../controllers/friend')
 const tokenModel = require('../models/token')
 
-const friendController = require('../controllers/friend')
-const tokenModel = require('../models/token')
-
 router.route('/:fid')
     .patch(tokenModel.isLoggedIn, friendController.approveFriendRequest)
     .delete(tokenModel.isLoggedIn, friendController.deleteFriend)

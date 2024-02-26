@@ -1,5 +1,4 @@
 const postController = require('../controllers/post');
-const postModel = require('../models/post');
 const tokenModel = require("../models/token");
 
 const express = require("express");
@@ -13,7 +12,7 @@ router.route("/")
     .get(tokenModel.isLoggedIn, postController.getUserPosts)
     .post(tokenModel.isLoggedIn, postController.createPost)
 
-
+    module.exports = router;
 
 
 

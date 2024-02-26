@@ -8,12 +8,20 @@ async function createPost(user_name, first_name, last_name, pic, profile, conten
     });
     if (publish_date)
         post.publish_date = publish_date;
+    await addPost(user_name, post);
     return await post.save();
 }
 
+async function addPost(user_name, post) {
+    const user = await User.findOne({ user_name });
+    if (user) {
+        user.posts.push(post._id);
+        await user.save();
+    }
+}
 
 // Delete a user's post
-async function deletePost(user_name, postId) {
+async function removePost(user_name, postId) {
     try {
         await User.updateOne(
             { user_name }, // Match the user by its username
@@ -22,6 +30,16 @@ async function deletePost(user_name, postId) {
     } catch (error) {
         return false;
     }
+}
+
+async function deletePost(user_name, postId) {
+    const post = await Post.findById(postId);
+    // Make sure the user ia authorised to delete this post
+    if (post && post.user_name == user_name) {
+        await Post.findOneAndDelete({ _id: postId });
+        return removePost(user_name, postId);
+    }
+    return false;
 }
 
 // Edit a post's content and/or picture
@@ -34,13 +52,14 @@ async function editPost(user_name, postId, updatedContent, updatedPic) {
 
         // If the post is found
         if (postIndex !== -1) {
+            const post = await Post.findById(user.posts[postIndex]);
             // Update the content and pic of the post
-            if (updatedContent) user.posts[postIndex].content = updatedContent;
-            if (updatedPic) user.posts[postIndex].pic = updatedPic;
+            if (updatedContent) post.content = updatedContent;
+            if (updatedPic) post.pic = updatedPic;
 
             // Save the updated user
-            await user.save();
-            return user.posts[postIndex];
+            await post.save();
+            return post;
         } else
             // If the post is not found
             return null;
@@ -54,7 +73,7 @@ async function getPostById(user, postId) {
     const postIndex = user.posts.findIndex(post => post._id.toString() === postId.toString())
     // If the post is found
     if (postIndex !== -1) {
-        return user.posts[postIndex];
+        return await Post.findById(user.posts[postIndex]);
     }
 
     return null;
@@ -70,7 +89,7 @@ async function getUserPosts(req_user_name, user_name) {
         if (!req_user)
             return { code: 404, error: "This requested user doesn't exist!" };
 
-        if (friendService.isFriend(user, req_user._id)) {
+        if (req_user_name == user_name || friendService.isFriend(user, req_user._id)) {
         // Sort the posts by publish_date in descending order
         const sortedPosts = user.posts.sort((a, b) => b.publish_date - a.publish_date);
         return sortedPosts;

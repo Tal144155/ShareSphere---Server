@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = require('./user');
-const friendService = require('../services/user')
+const friendService = require('../services/friend')
 
 
 async function getFriends(req_user_name, user_name) {

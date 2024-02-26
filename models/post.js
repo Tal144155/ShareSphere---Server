@@ -29,7 +29,7 @@ const Post = new Schema({
         required: true,
     },
     likes: {
-        type: Int16Array,
+        type: Number,
         default: 0,
     },
     is_liked: {

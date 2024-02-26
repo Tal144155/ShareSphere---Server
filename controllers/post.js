@@ -33,7 +33,7 @@ async function editPost(req, res) {
     const pic = req.headers.pic;
     const updatedPost = await postService.editPost(req.params.id, req.params.pid, content, pic);
     if (updatedPost) {
-        return res.status(201).json({ post }, { message: "Post updated successfully" });
+        return res.status(201).json(updatedPost);
     } else {
         return res.status(500).json({ error: "Failed to update post" });
     }
@@ -50,7 +50,8 @@ async function deletePost(req, res) {
 
 async function getUserPosts(req, res) {
     const req_user = req.headers.username;
-    const posts = await postService.getUserPosts(req_user, req.params.id);
+    const user_name = req.params.id;
+    const posts = await postService.getUserPosts(req_user, user_name);
     if (posts.error) {
         return res.status(posts.code).json({ error: posts.error });
     } else {

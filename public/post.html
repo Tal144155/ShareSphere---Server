@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input name="username" type="text" />
+    <input name="password" type="password" />
+    <input name="firstname" type="text" />
+    <input name="lastname" type="text" />
+    <input name="pic" type="text" />
+    <input name="profile" type="text" />
+    <input name="content" type="text" />
+    <input name="friend" type="text" />
+    <button onclick="getToken()">get token</button>
+    <button onclick="createPost()">create post</button>
+    <button onclick="editPost()">edit post</button>
+    <button onclick="deletePost()">delete post</button>
+    <button onclick="getUsersPosts()">get user's posts</button>
+    <script>
+        let token;
+        async function getToken() {
+            let data = {
+                username: document.getElementsByName("username")[0].value,
+                password: document.getElementsByName("password")[0].value,
+            };
+
+            const response = await fetch("http://localhost:8080/api/tokens", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const responseData = await response.json();
+            token = responseData.token;
+        }
+
+        let username = document.getElementsByName("username")[0].value;
+        let pid = "65dce4b7cc66e41ec28e9294";
+        let contentString = document.getElementsByName("content")[0].value;
+        let picString = document.getElementsByName("pic")[0].value;
+        let friend = document.getElementsByName("friend")[0].value;
+
+        async function createPost() {
+            username = document.getElementsByName("username")[0].value;
+            let post = {
+                user_name: username,
+                first_name: document.getElementsByName("firstname")[0].value,
+                last_name: document.getElementsByName("lastname")[0].value,
+                pic: document.getElementsByName("pic")[0].value,
+                profile: document.getElementsByName("profile")[0].value,
+                content: document.getElementsByName("content")[0].value,
+            }
+            const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+                body: JSON.stringify(post),
+            });
+
+        }
+
+        async function editPost() {
+            username = document.getElementsByName("username")[0].value;
+            pid = '65dcf433f1e2c9daddffa820';
+            contentString = document.getElementsByName("content")[0].value;
+            picString = document.getElementsByName("pic")[0].value;
+            friend = document.getElementsByName("friend")[0].value;
+            const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                    content: contentString,
+                    pic: picString,
+                },
+            });
+
+        }
+
+        async function deletePost() {
+            username = document.getElementsByName("username")[0].value;
+            pid = '65dcf433f1e2c9daddffa820';
+            contentString = document.getElementsByName("content")[0].value;
+            picString = document.getElementsByName("pic")[0].value;
+            friend = document.getElementsByName("friend")[0].value;
+            const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
+                method: "delete",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+            });
+
+        }
+
+        async function getUsersPosts() {
+            let user_name = document.getElementsByName("username")[0].value;
+            contentString = document.getElementsByName("content")[0].value;
+            picString = document.getElementsByName("pic")[0].value;
+            friend = document.getElementsByName("friend")[0].value;
+            const reponse = await fetch(`http://localhost:8080/api/users/${user_name}/posts`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                    username: friend,
+                },
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

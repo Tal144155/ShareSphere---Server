@@ -32,12 +32,6 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 });
 
 //connecting to router
-const posts = require('./routes/post');
-server.use("/api/users/:id/posts", friends);
-
-const friends = require('./routes/friend');
-server.use("/api/users/:id/friends", friends);
-
 const users = require("./routes/user");
 server.use("/api/users", users);
 
