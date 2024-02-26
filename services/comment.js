@@ -34,6 +34,14 @@ const createComment = async (
   return true;
 };
 
+const getComment = async (cid) => {
+  const comment = await Comment.findById(cid);
+  if (comment) {
+    return comment;
+  }
+  return null;
+};
+
 //getting all comments of a ceirtian post
 const getComments = async (pid) => {
   const post = await postService.getPostById(pid);
@@ -43,4 +51,16 @@ const getComments = async (pid) => {
   return post.populate("comments");
 };
 
-module.exports = { createComment, getComments };
+const editComment = async (content, cid) => {
+  const updatedComment = await Comment.findOneAndUpdate(
+    { _id: cid },
+    { $set: { content: content } },
+    { new: true }
+  );
+  if (updatedComment) {
+    return true;
+  }
+  return false;
+};
+
+module.exports = { createComment, getComments, editComment, getComment };

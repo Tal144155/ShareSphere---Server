@@ -12,18 +12,31 @@ const createComment = async (req, res) => {
   if (commentSaved) {
     return res.status(201).json({ message: "comment added succesfully" });
   } else {
-    return res.status(404).json({ error: "post was not found" });
+    return res.status(404).json({ error: "comment was not found" });
   }
 };
 
 const getComments = async (req, res) => {
-    const postId = req.params.pid;
-    const commentsArray = commentService.getComments(postId);
-    if(commentsArray==null) {
-        return res.status(404).json({ error: "post was not found" });
+  const postId = req.params.pid;
+  const commentsArray = commentService.getComments(postId);
+  if (commentsArray == null) {
+    return res.status(404).json({ error: "comment was not found" });
+  }
+  res.json(commentsArray);
+};
+
+const editComment = async (req, res) => {
+  const user_name = req.params.id;
+  const comment_id = req.params.cid;
+  const comment = commentService.getComment(comment_id);
+  if (comment) {
+    if (comment.user_name === user_name) {
+      commentService.editComment(req.body.content, comment_id);
+      return res.status(200).json({ message: "Comment has been updated" });
+    } else {
+      return res.status(403).json({ error: "user dont own this comment" });
     }
-    res.json(commentsArray);
-}
+  }
+};
 
-module.exports = { createComment };
-
+module.exports = { createComment, getComments, editComment };
