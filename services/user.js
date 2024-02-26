@@ -35,11 +35,25 @@ const getUserByUserName = async (user_name) => {
 };
 
 const deleteUser = async (user_name) => {
-  const user = await User.findOneAndDelete({ user_name: user_name });
-  if (!user) {
-    return false;
+  const userToDelete = await User.findOne({ user_name: user_name });
+  if (userToDelete) {
+    const user = await User.findOneAndDelete({ user_name: user_name });
+    if (!user) {
+      return false;
+    }
+    const deletedUserId = userToDelete._id;
+    await User.updateMany(
+      { friends: deletedUserId },
+      { $pull: { friends: deletedUserId } }
+    );
+    // Remove from friend_requests
+    await User.updateMany(
+      { friend_requests: deletedUserId },
+      { $pull: { friend_requests: deletedUserId } }
+    );
+    return true;
   }
-  return true;
+  return false;
 };
 
 const updateUser = async (user_name, first_name, last_name, pic) => {
@@ -67,7 +81,6 @@ async function isSigned(user_name, password) {
   if (!user) return false;
   return true;
 }
-
 
 module.exports = {
   createUser, isSigned, getUserName,
