@@ -22,7 +22,7 @@ const createComment = async (
   const commentSaved = await comment.save();
   const commentId = commentSaved._id;
   //adding comment to the comments list in post
-  const post = await postService.getPostById(postid);
+  const post = await postService.getPostById(user_name, postid);
   if (!post) {
     // Handle the case where the post with the given postid is not found
     return false;
@@ -43,14 +43,15 @@ const getComment = async (cid) => {
 };
 
 //getting all comments of a ceirtian post
-const getComments = async (pid) => {
-  const post = await postService.getPostById(pid);
+const getComments = async (pid, user_name) => {
+  const post = await postService.getPostById(user_name, pid);
   if (!post) {
     return null;
   }
   return post.populate("comments");
 };
 
+//editing comments content
 const editComment = async (content, cid) => {
   const updatedComment = await Comment.findOneAndUpdate(
     { _id: cid },
@@ -63,4 +64,25 @@ const editComment = async (content, cid) => {
   return false;
 };
 
-module.exports = { createComment, getComments, editComment, getComment };
+//deleting comment from post
+const deleteComment = async (pid, cid) => {
+  const deletedComment = await Comment.findOneAndDelete({ _id: cid });
+  if (!deletedComment) {
+    return false;
+  }
+  const post = await Post.findByIdAndUpdate(pid, {
+    $pull: { comments: cid },
+  });
+  if (!post) {
+    return false;
+  }
+  return true;
+};
+
+module.exports = {
+  createComment,
+  getComments,
+  editComment,
+  getComment,
+  deleteComment,
+};

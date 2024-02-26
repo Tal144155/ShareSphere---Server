@@ -1,19 +1,22 @@
 const userController = require("../controllers/user");
 const tokenModel = require("../models/token.js");
+const commentController = require("../controllers/comment");
 
 const express = require("express");
 
 var router = express.Router();
 
-const friendController = require('../controllers/friend')
+const friendController = require("../controllers/friend");
 
-router.route('/:id/friends/:fid')
-    .patch(tokenModel.isLoggedIn, friendController.approveFriendRequest)
-    .delete(tokenModel.isLoggedIn, friendController.deleteFriend)
-    
-router.route('/:id/friends')
-    .get(tokenModel.isLoggedIn, friendController.getFriends)
-    .post(tokenModel.isLoggedIn, friendController.friendRequest)
+router
+  .route("/:id/friends/:fid")
+  .patch(tokenModel.isLoggedIn, friendController.approveFriendRequest)
+  .delete(tokenModel.isLoggedIn, friendController.deleteFriend);
+
+router
+  .route("/:id/friends")
+  .get(tokenModel.isLoggedIn, friendController.getFriends)
+  .post(tokenModel.isLoggedIn, friendController.friendRequest);
 
 router.route("/").post(userController.createUser);
 
@@ -23,5 +26,13 @@ router
   .delete(tokenModel.isLoggedIn, userController.deleteUser)
   .patch(tokenModel.isLoggedIn, userController.updateUser);
 
-module.exports = router;
+router
+  .route("/:id/posts/:pid/comment/")
+  .post(tokenModel.isLoggedIn, commentController.createComment);
 
+router
+  .route("/:id/posts/:pid/comment/:cid")
+  .patch(tokenModel.isLoggedIn, commentController.editComment)
+  .delete(tokenModel.isLoggedIn, commentController.deleteComment);
+
+module.exports = router;
