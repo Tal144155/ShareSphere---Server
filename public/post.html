@@ -22,6 +22,7 @@
     <button onclick="editPost()">edit post</button>
     <button onclick="deletePost()">delete post</button>
     <button onclick="getUsersPosts()">get user's posts</button>
+    <button onclick="getFeed()">get feed</button>
     <script>
         let token;
         async function getToken() {
@@ -44,13 +45,14 @@
 
         async function createPost() {
             let post = {
-                user_name: username,
+                user_name: document.getElementsByName("username")[0].value,
                 first_name: document.getElementsByName("firstname")[0].value,
                 last_name: document.getElementsByName("lastname")[0].value,
                 pic: document.getElementsByName("pic")[0].value,
                 profile: document.getElementsByName("profile")[0].value,
                 content: document.getElementsByName("content")[0].value,
             }
+            let username = document.getElementsByName("username")[0].value;
             const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts", {
                 method: "post",
                 headers: {
@@ -105,6 +107,17 @@
             });
         }
 
+        async function getFeed() {
+            let user_name = document.getElementsByName("username")[0].value;
+            const reponse = await fetch(`http://localhost:8080/api/posts`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                    username: user_name,
+                },
+            });
+        }
 
     </script>
 </body>

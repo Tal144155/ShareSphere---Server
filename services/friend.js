@@ -57,6 +57,12 @@ function isFriend(user, friend_id) {
   return friendIndex !== -1
 }
 
+// Search for the friend user name in the friends array of the user
+function populatedIsFriend(user, friend_user_name) {
+  const friendIndex = user.friends.findIndex(user_name => user_name === friend_user_name);
+  return friendIndex !== -1
+}
+
 // Search for the friend id in the friend requests array of the user and return it
 function isRequested(user, friend_id) {
   const friendIndex = user.friend_requests.findIndex(ObjectId => ObjectId.toString() === friend_id.toString());
@@ -64,5 +70,5 @@ function isRequested(user, friend_id) {
 }
 
 module.exports = {
-  removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests
+  removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, populatedIsFriend
 }

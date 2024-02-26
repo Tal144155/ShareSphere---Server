@@ -32,6 +32,9 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 });
 
 //connecting to router
+const posts = require("./routes/post");
+server.use("/api/posts", posts);
+
 const users = require("./routes/user");
 server.use("/api/users", users);
 

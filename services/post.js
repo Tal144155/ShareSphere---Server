@@ -90,9 +90,9 @@ async function getUserPosts(req_user_name, user_name) {
             return { code: 404, error: "This requested user doesn't exist!" };
 
         if (req_user_name == user_name || friendService.isFriend(user, req_user._id)) {
-        // Sort the posts by publish_date in descending order
-        const sortedPosts = user.posts.sort((a, b) => b.publish_date - a.publish_date);
-        return sortedPosts;
+            // Sort the posts by publish_date in descending order
+            const sortedPosts = user.posts.sort((a, b) => b.publish_date - a.publish_date);
+            return sortedPosts;
         } else {
             return { code: 403, error: "You are not friends with this user!" };
         }
@@ -103,7 +103,41 @@ async function getUserPosts(req_user_name, user_name) {
     }
 }
 
+async function getFeed(user_name) {
+    try {
+        const user = await User.findOne({ user_name });
+        if (!user)
+            return { code: 404, error: "This user doesn't exist!" };
+        await user.populate('friends');
+
+        let feed = []; // Initialize feed as an empty array
+        let countFriends = 20;
+        let countStrangers = 5;
+
+        // Get all available posts and sort them by publish date
+        const posts = await Post.find({}).sort({ publish_date: -1 }); // Sort posts by publish_date in descending order
+
+        // Iterate through the posts
+        for (const post of posts) {
+            // Check if the post is from a friend
+            if (countFriends > 0 && friendService.populatedIsFriend(user, post.user_name)) {
+                feed.push(post);
+                countFriends--;
+            } else if (countStrangers > 0) { // Otherwise, check if it's from a stranger
+                feed.push(post);
+                countStrangers--;
+            }
+            // If both counters are 0, break the loop
+            if (countFriends === 0 && countStrangers === 0) break;
+        }
+        return feed;
+    } catch (err) {
+        return { code: 500, error: err };
+    }
+}
+
+
 
 module.exports = {
-    createPost, deletePost, editPost, getPostById, getUserPosts
+    createPost, deletePost, editPost, getPostById, getUserPosts, getFeed
 }
