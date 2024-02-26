@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = require('./user');
-const userService = require('../services/user')
+const friendService = require('../services/user')
 
 
 async function getFriends(req_user_name, user_name) {
@@ -20,11 +20,11 @@ async function getFriends(req_user_name, user_name) {
 
 
             // If they are not friends
-            if (userService.isFriend(user, req_user._id) == false)
+            if (friendService.isFriend(user, req_user._id) == false)
                 return { code: 403, error: "Access denied! You are not friends with this user!" };
         }
 
-        return userService.getFriends(user)
+        return friendService.getFriends(user)
 
     } catch (error) {
         // Handle any errors
@@ -39,7 +39,7 @@ async function getFriendRequests(user_name) {
     // Check if the user exists
     if (!user)
         return { code: 404, error: "This user doesn't exist!" };
-    return userService.getFriendRequests(user);
+    return friendService.getFriendRequests(user);
 }
 
 
@@ -59,11 +59,11 @@ async function friendRequest(req_user_name, res_user_name) {
         return { code: 404, error: "This requested user doesn't exist!" };
 
     // Check if the users are already friends
-    if (userService.isFriend(req_user, res_user._id))
+    if (friendService.isFriend(req_user, res_user._id))
         return { code: 403, error: "Invalid request! You are already friends with this user!" };
 
     // Check if the request is new
-    if (userService.isRequested(res_user, req_user._id))
+    if (friendService.isRequested(res_user, req_user._id))
         return { code: 403, error: "You've already sent a friend request to this user!" };
 
     // Add the requesting user to the other user's list of friend requests
@@ -82,14 +82,14 @@ async function approveFriendRequest(user_name, friend_user_name) {
     const friend = await User.findOne({ user_name: friend_user_name })
     if (!friend)
         return { code: 404, error: "This requested user doesn't exist!" };
-    if (!userService.isRequested(user, friend._id))
+    if (!friendService.isRequested(user, friend._id))
         return { code: 403, error: "This user isn't requesting to befriend you!" };
     
     // Remove the fid from the friend requests array and add it to the friends array
-    let hasWorked = await userService.removeRequest(user_name, friend._id)
-    hasWorked = hasWorked && await userService.addFriend(user, friend._id)
+    let hasWorked = await friendService.removeRequest(user_name, friend._id)
+    hasWorked = hasWorked && await friendService.addFriend(user, friend._id)
     // Add the user to the fid's friends array
-    hasWorked = hasWorked && await userService.addFriend(friend, user._id)
+    hasWorked = hasWorked && await friendService.addFriend(friend, user._id)
     if (hasWorked)
         return { code: 201, message: "You are now friends!" }
     return { code: 500, error: "Failed to add friend" }
@@ -105,13 +105,13 @@ async function deleteFriend(user_name, friend_user_name) {
         return { code: 404, error: "This requested user doesn't exist!" };
 
     // Check if we need to delete a friend request or a friend
-    if (userService.isRequested(user, friend._id)) {
-        userService.removeRequest(user_name, friend._id)
+    if (friendService.isRequested(user, friend._id)) {
+        friendService.removeRequest(user_name, friend._id)
         return { code: 201, message: "Successfully removed friend request" }
     } else {
         // Delete the users from each others arrays of friends
-        let hasWorked = await userService.deleteFriend(user_name, friend._id)
-        hasWorked = hasWorked && userService.deleteFriend(friend_user_name, user._id)
+        let hasWorked = await friendService.deleteFriend(user_name, friend._id)
+        hasWorked = hasWorked && friendService.deleteFriend(friend_user_name, user._id)
         if (hasWorked)
             return { code: 201, message: "You are no longer friends" }
         return { code: 500, error: "Failed to delete friend" }

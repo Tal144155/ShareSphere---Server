@@ -10,6 +10,7 @@ router.route("/:pid")
     .delete(tokenModel.isLoggedIn, postController.deletePost)
 
 router.route("/")
+    .get(tokenModel.isLoggedIn, postController.getUserPosts)
     .post(tokenModel.isLoggedIn, postController.createPost)
 
 

@@ -48,6 +48,16 @@ async function deletePost(req, res) {
     }
 }
 
+async function getUserPosts(req, res) {
+    const req_user = req.headers.username;
+    const posts = await postService.getUserPosts(req_user, req.params.id);
+    if (posts.error) {
+        return res.status(posts.code).json({ error: posts.error });
+    } else {
+        return res.status(200).json(posts);
+    }
+}
+
 module.exports = {
-    createPost, getPostById, editPost, deletePost
+    createPost, getPostById, editPost, deletePost, getUserPosts
 }

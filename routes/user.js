@@ -4,7 +4,6 @@ const tokenModel = require("../models/token");
 const express = require("express");
 var router = express.Router();
 
-router.use
 
 router.route("/:id")
   .get(tokenModel.isLoggedIn, userController.getUser)
