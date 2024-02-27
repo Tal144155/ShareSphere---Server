@@ -22,15 +22,6 @@
     <button onclick="deletePost()">delete post</button>
     <button onclick="getUsersPosts()">get user's posts</button>
     <button onclick="getFeed()">get feed</button>
-    <script>
-        let token;
-        async function getToken() {
-            let data = {
-                username: document.getElementsByName("username")[0].value,
-                password: document.getElementsByName("password")[0].value,
-            };
-          
-          
     <h1>adding comments!! get ready</h1>
     <lable>post id</lable>
     <input name="posttocomment" type="text" />
@@ -42,7 +33,6 @@
     <button onclick="editComment()">edit comment</button>
     <button onclick="deleteComment()">delete comment</button>
     <button onclick="getComments()">get comments</button>
-
     <script>
       let token;
       async function getToken() {
@@ -58,6 +48,7 @@
           },
           body: JSON.stringify(data),
         });
+    }
 
 
         async function createPost() {
