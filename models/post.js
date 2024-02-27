@@ -32,10 +32,12 @@ const Post = new Schema({
     type: Number,
     default: 0,
   },
-  is_liked: {
-    type: Bool,
-    default: false,
-  },
+  liked_by: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   publish_date: {
     type: Date,
     default: mongoose.now,

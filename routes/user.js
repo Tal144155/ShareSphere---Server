@@ -2,6 +2,7 @@ const userController = require("../controllers/user");
 const tokenModel = require("../models/token.js");
 const postController = require("../controllers/post");
 const commentController = require("../controllers/comment");
+const likeController = require("../controllers/like.js");
 
 const express = require("express");
 var router = express.Router();
@@ -18,6 +19,25 @@ router
   .route("/:id/friends")
   .get(tokenModel.isLoggedIn, friendController.getFriends)
   .post(tokenModel.isLoggedIn, friendController.friendRequest);
+
+//comment api mapping
+
+router
+  .route("/:id/posts/:pid/comments/")
+  .post(tokenModel.isLoggedIn, commentController.createComment)
+  .get(tokenModel.isLoggedIn, commentController.getComments);
+
+router
+  .route("/:id/posts/:pid/comments/:cid")
+  .patch(tokenModel.isLoggedIn, commentController.editComment)
+  .delete(tokenModel.isLoggedIn, commentController.deleteComment);
+
+//likes api mapping
+
+router
+  .route("/:id/posts/:pid/likes")
+  .get(tokenModel.isLoggedIn, likeController.isLiked)
+  .patch(tokenModel.isLoggedIn, likeController.like);
 
 // posts api mapping
 
@@ -40,15 +60,5 @@ router
   .patch(tokenModel.isLoggedIn, userController.updateUser);
 
 router.route("/").post(userController.createUser);
-
-router
-  .route("/:id/posts/:pid/comments/")
-  .post(tokenModel.isLoggedIn, commentController.createComment)
-  .get(tokenModel.isLoggedIn, commentController.getComments);
-
-router
-  .route("/:id/posts/:pid/comments/:cid")
-  .patch(tokenModel.isLoggedIn, commentController.editComment)
-  .delete(tokenModel.isLoggedIn, commentController.deleteComment);
 
 module.exports = router;
