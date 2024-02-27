@@ -133,8 +133,8 @@ async function getFeed(user_name) {
 
         // Iterate through the posts
         for (const post of posts) {
-            // Check if the post is from a friend
-            if (countFriends > 0 && friendService.populatedIsFriend(user, post.user_name)) {
+            // Check if the post is from a friend or the user's himself
+            if (countFriends > 0 && (user_name == post.user_name || friendService.populatedIsFriend(user, post.user_name))) {
                 feed.push(post);
                 countFriends--;
             } else if (countStrangers > 0) { // Otherwise, check if it's from a stranger
