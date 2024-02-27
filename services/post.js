@@ -8,15 +8,22 @@ async function createPost(user_name, first_name, last_name, pic, profile, conten
     });
     if (publish_date)
         post.publish_date = publish_date;
-    await addPost(user_name, post);
-    return await post.save();
+    if (await addPost(user_name, post))
+        return await post.save();
+    return null;
 }
 
 async function addPost(user_name, post) {
-    const user = await User.findOne({ user_name });
-    if (user) {
-        user.posts.push(post._id);
-        await user.save();
+    try {
+        const user = await User.findOne({ user_name });
+        if (user) {
+            user.posts.push(post._id);
+            await user.save();
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
     }
 }
 
@@ -28,18 +35,24 @@ async function removePost(user_name, postId) {
             { $pull: { posts: postId } }) // Remove the specified post from the array
         return true;
     } catch (error) {
+        console.log(error);
         return false;
     }
 }
 
 async function deletePost(user_name, postId) {
-    const post = await Post.findById(postId);
-    // Make sure the user ia authorised to delete this post
-    if (post && post.user_name == user_name) {
-        await Post.findOneAndDelete({ _id: postId });
-        return removePost(user_name, postId);
+    try {
+        const post = await Post.findById(postId);
+        // Make sure the user ia authorised to delete this post
+        if (post && post.user_name == user_name) {
+            await Post.findOneAndDelete({ _id: postId });
+            return removePost(user_name, postId);
+        }
+        return false;
+    } catch (error) {
+        console.log(error);
+        return false;
     }
-    return false;
 }
 
 // Edit a post's content and/or picture
@@ -64,6 +77,7 @@ async function editPost(user_name, postId, updatedContent, updatedPic) {
             // If the post is not found
             return null;
     } catch (error) {
+        console.log(error);
         return null;
     }
 }
@@ -132,6 +146,7 @@ async function getFeed(user_name) {
         }
         return feed;
     } catch (err) {
+        console.log(err);
         return { code: 500, error: err };
     }
 }
