@@ -84,11 +84,6 @@ async function editPost(user_name, postId, updatedContent, updatedPic) {
         return null;
 
     }
-    // If the post is not found
-    else return null;
-  } catch (error) {
-    return null;
-  }
 }
 
 // Return a post
@@ -126,10 +121,6 @@ async function getUserPosts(req_user_name, user_name) {
         console.error("error:", error);
         return { code: 500, error: "Failed to fetch posts" };
     }
-  } catch (error) {
-    console.error("error:", error);
-    return { code: 500, error: "Failed to fetch posts" };
-  }
 }
 
 
