@@ -59,6 +59,16 @@ async function getUserPosts(req, res) {
     }
 }
 
+async function getFeed(req, res) {
+    const user_name = req.headers.username;
+    const feed = await postService.getFeed(user_name);
+    if (feed.error) {
+        return res.status(feed.code).json({ error: feed.error });
+    } else {
+        return res.status(200).json(feed);
+    }
+}
+
 module.exports = {
-    createPost, getPostById, editPost, deletePost, getUserPosts
+    createPost, getPostById, editPost, deletePost, getUserPosts, getFeed
 }
