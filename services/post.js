@@ -1,6 +1,7 @@
-const Post = require('../models/post');
+const Post = require("../models/post");
 const User = require("../models/user");
 const friendService = require("../services/friend");
+
 
 async function createPost(user_name, first_name, last_name, pic, profile, content, publish_date) {
     let post = new Post({
@@ -57,11 +58,13 @@ async function deletePost(user_name, postId) {
 
 // Edit a post's content and/or picture
 async function editPost(user_name, postId, updatedContent, updatedPic) {
-    try {
-        const user = await User.findOne({ user_name }); // Find the user
+  try {
+    const user = await User.findOne({ user_name }); // Find the user
 
-        // Find the index of the post in the user's posts array
-        const postIndex = user.posts.findIndex(post => post._id.toString() === postId.toString());
+    // Find the index of the post in the user's posts array
+    const postIndex = user.posts.findIndex(
+      (post) => post._id.toString() === postId.toString()
+    );
 
         // If the post is found
         if (postIndex !== -1) {
@@ -79,18 +82,26 @@ async function editPost(user_name, postId, updatedContent, updatedPic) {
     } catch (error) {
         console.log(error);
         return null;
+
     }
+    // If the post is not found
+    else return null;
+  } catch (error) {
+    return null;
+  }
 }
 
 // Return a post
 async function getPostById(user, postId) {
-    const postIndex = user.posts.findIndex(post => post._id.toString() === postId.toString())
-    // If the post is found
-    if (postIndex !== -1) {
-        return await Post.findById(user.posts[postIndex]);
-    }
+  const postIndex = user.posts.findIndex(
+    (post) => post._id.toString() === postId.toString()
+  );
+  // If the post is found
+  if (postIndex !== -1) {
+    return await Post.findById(user.posts[postIndex]);
+  }
 
-    return null;
+  return null;
 }
 
 async function getUserPosts(req_user_name, user_name) {
@@ -115,7 +126,12 @@ async function getUserPosts(req_user_name, user_name) {
         console.error("error:", error);
         return { code: 500, error: "Failed to fetch posts" };
     }
+  } catch (error) {
+    console.error("error:", error);
+    return { code: 500, error: "Failed to fetch posts" };
+  }
 }
+
 
 async function getFeed(user_name) {
     try {
@@ -152,7 +168,24 @@ async function getFeed(user_name) {
 }
 
 
+async function getPostByPostId(postid) {
+  try {
+    const post = await Post.findById(postid);
+    if (!post) {
+      return null;
+    }
+    return post;
+  } catch (error) {
+    return null;
+  }
+}
 
 module.exports = {
-    createPost, deletePost, editPost, getPostById, getUserPosts, getFeed
-}
+  createPost,
+  deletePost,
+  editPost,
+  getPostById,
+  getUserPosts,
+  getPostByPostId,
+  getFeed
+};

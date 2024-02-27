@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <input name="username" type="text" />
     <input name="password" type="password" />
     <input name="firstname" type="text" />
@@ -16,7 +15,7 @@
     <input name="profile" type="text" />
     <input name="content" type="text" />
     <input name="friend" type="text" />
-    <input name="pid" type="text"/>
+    <input name="pid" type="text" />
     <button onclick="getToken()">get token</button>
     <button onclick="createPost()">create post</button>
     <button onclick="editPost()">edit post</button>
@@ -30,18 +29,36 @@
                 username: document.getElementsByName("username")[0].value,
                 password: document.getElementsByName("password")[0].value,
             };
+          
+          
+    <h1>adding comments!! get ready</h1>
+    <lable>post id</lable>
+    <input name="posttocomment" type="text" />
+    <label>comment</label>
+    <input name="commentcontent" type="text" />
+    <button onclick="addComment()">add comment</button>
+    <label>comment id</label>
+    <input name="commentid" type="text" />
+    <button onclick="editComment()">edit comment</button>
+    <button onclick="deleteComment()">delete comment</button>
+    <button onclick="getComments()">get comments</button>
 
-            const response = await fetch("http://localhost:8080/api/tokens", {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
+    <script>
+      let token;
+      async function getToken() {
+        let data = {
+          username: document.getElementsByName("username")[0].value,
+          password: document.getElementsByName("password")[0].value,
+        };
 
-            const responseData = await response.json();
-            token = responseData.token;
-        }
+        const response = await fetch("http://localhost:8080/api/tokens", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
 
         async function createPost() {
             let post = {
@@ -62,50 +79,130 @@
                 body: JSON.stringify(post),
             });
 
-        }
+        const responseData = await response.json();
+        token = responseData.token;
+      }
 
-        async function editPost() {
-            let username = document.getElementsByName("username")[0].value;
-            let pid = document.getElementsByName("pid")[0].value;
-            let contentString = document.getElementsByName("content")[0].value;
-            let picString = document.getElementsByName("pic")[0].value;
-            const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token,
-                    content: contentString,
-                    pic: picString,
-                },
-            });
 
-        }
+      async function createPost() {
+        let username = document.getElementsByName("username")[0].value;
+        let post = {
+          user_name: document.getElementsByName("username")[0].value,
+          first_name: document.getElementsByName("firstname")[0].value,
+          last_name: document.getElementsByName("lastname")[0].value,
+          pic: document.getElementsByName("pic")[0].value,
+          profile: document.getElementsByName("profile")[0].value,
+          content: document.getElementsByName("content")[0].value,
+        };
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" + username + "/posts",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify(post),
+          }
+        );
+      }
 
-        async function deletePost() {
-            let username = document.getElementsByName("username")[0].value;
-            let pid = document.getElementsByName("pid")[0].value;
-            const reponse = await fetch("http://localhost:8080/api/users/" + username + "/posts/" + pid, {
-                method: "delete",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token,
-                },
-            });
+      async function editPost() {
+        let username = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("pid")[0].value;
+        let contentString = document.getElementsByName("content")[0].value;
+        let picString = document.getElementsByName("pic")[0].value;
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" + username + "/posts/" + pid,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              content: contentString,
+              pic: picString,
+            },
+          }
+        );
+      }
 
-        }
+      async function deletePost() {
+        let username = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("pid")[0].value;
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" + username + "/posts/" + pid,
+          {
+            method: "delete",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+      }
 
-        async function getUsersPosts() {
-            let user_name = document.getElementsByName("username")[0].value;
-            let friend = document.getElementsByName("friend")[0].value;
-            const reponse = await fetch(`http://localhost:8080/api/users/${user_name}/posts`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token,
-                    username: friend,
-                },
-            });
-        }
+      async function getUsersPosts() {
+        let user_name = document.getElementsByName("username")[0].value;
+        let friend = document.getElementsByName("friend")[0].value;
+        const reponse = await fetch(
+          `http://localhost:8080/api/users/${user_name}/posts`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              username: friend,
+            },
+          }
+        );
+      }
+
+      async function addComment() {
+        let user_name = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("posttocomment")[0].value;
+        let comment = {
+          content: document.getElementsByName("commentcontent")[0].value,
+        };
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" +
+            user_name +
+            "/posts/" +
+            pid +
+            "/comments",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify(comment),
+          }
+        );
+      }
+
+      async function editComment() {
+        let user_name = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("posttocomment")[0].value;
+        let commentid = document.getElementsByName("commentid")[0].value;
+        let content = document.getElementsByName("commentcontent")[0].value;
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" +
+            user_name +
+            "/posts/" +
+            pid +
+            "/comments/" +
+            commentid,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              content: content,
+            },
+          }
+        );
+      }
+
 
         async function getFeed() {
             let user_name = document.getElementsByName("username")[0].value;
@@ -119,7 +216,45 @@
             });
         }
 
-    </script>
-</body>
+      async function deleteComment() {
+        let user_name = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("posttocomment")[0].value;
+        let commentid = document.getElementsByName("commentid")[0].value;
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" +
+            user_name +
+            "/posts/" +
+            pid +
+            "/comments/" +
+            commentid,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+      }
 
+      async function getComments() {
+        let user_name = document.getElementsByName("username")[0].value;
+        let pid = document.getElementsByName("posttocomment")[0].value;
+        const reponse = await fetch(
+          "http://localhost:8080/api/users/" +
+            user_name +
+            "/posts/" +
+            pid +
+            "/comments",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+      }
+    </script>
+  </body>
 </html>
