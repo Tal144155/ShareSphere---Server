@@ -15,6 +15,13 @@ const createUser = async (req, res) => {
   }
 };
 
+const doesExistUserName = async (req, res) => {
+  const user = await userService.getUserByUserName(req.headers.id);
+  if (user == null) {
+    return res.status(200).json({ message: "user can be added" });
+  }
+  return res.status(409).json({ error: "User name already exists" });
+};
 
 // Request has the jwt, needs to be extracted and checked that match.
 const getUser = async (req, res) => {
@@ -52,4 +59,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUser, deleteUser, updateUser };
+module.exports = { createUser, getUser, deleteUser, updateUser, doesExistUserName };

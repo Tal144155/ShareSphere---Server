@@ -59,6 +59,9 @@ router
   .delete(tokenModel.isLoggedIn, userController.deleteUser)
   .patch(tokenModel.isLoggedIn, userController.updateUser);
 
-router.route("/").post(userController.createUser);
+router
+  .route("/")
+  .post(userController.createUser)
+  .get(userController.doesExistUserName);
 
 module.exports = router;
