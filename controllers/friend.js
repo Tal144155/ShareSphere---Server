@@ -21,6 +21,27 @@ const getFriends = async (req, res) => {
     }
 };
 
+const getFriendsRequest = async (req, res) => {
+    try {
+        const req_user_name = req.headers.username;
+        const id = req.params.id;
+        const friends = await friendModel.getFriendRequests(id);
+        
+        // Check if there is an error
+        if (friends.error) {
+            // Send an error response with the error code and message
+            res.status(404).json({ error: "user not found" });
+        } else {
+            // Send a success response with the friends array and status code 200
+            res.status(200).json(friends);
+        }
+    } catch (error) {
+        // Handle any unexpected errors and send a 500 response
+        console.error("Error:", error.message);
+        res.status(500).json({ error: "An error occurred while processing the request." });
+    }
+};
+
 const friendRequest = async (req, res) => {
     const req_user_name = req.headers.username;
     const res_user_name = req.params.id
@@ -63,6 +84,6 @@ const deleteFriend = async (req, res) => {
     }
 }
 
-module.exports = { getFriends, friendRequest, approveFriendRequest, deleteFriend }
+module.exports = { getFriends, friendRequest, approveFriendRequest, deleteFriend, getFriendsRequest }
 
 

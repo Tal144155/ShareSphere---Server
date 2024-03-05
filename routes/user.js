@@ -20,6 +20,10 @@ router
   .get(tokenModel.isLoggedIn, friendController.getFriends)
   .post(tokenModel.isLoggedIn, friendController.friendRequest);
 
+router
+  .route("/:id/friendsReq")
+  .get(tokenModel.isLoggedIn, friendController.getFriendsRequest);
+
 //comment api mapping
 
 router
