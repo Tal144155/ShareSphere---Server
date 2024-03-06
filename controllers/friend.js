@@ -30,17 +30,17 @@ const hasBeenSentRequesr = async (req, res) => {
     const req_user_name = req.headers.username;
     const id = req.params.id;
     // Get the user making the request
-    const userToCheck = await userService.getUserByUserName(req_user_name);
+    const userToCheck = await userService.getUserName(req_user_name);
     if (!userToCheck) {
       return res.status(404).json({ error: "User not found" });
     }
     // Get the user to check for friend requests
-    const userId = await userService.getUserByUserName(id);
+    const userId = await userService.getUserName(id);
     if (!userId) {
       return res.status(404).json({ error: "User not found" });
     }
     // Check if the friend request exists
-    const hasSentRequest = friendService.isRequested(userId, userToCheck);
+    const hasSentRequest = friendService.isRequested(userId[0], userToCheck[0]._id);
     res.status(200).json({ answer: hasSentRequest });
   } catch (error) {
     console.error("Error in hasBeenSentRequesr:", error);
