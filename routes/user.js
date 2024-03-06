@@ -24,6 +24,10 @@ router
   .route("/:id/friendsReq")
   .get(tokenModel.isLoggedIn, friendController.getFriendsRequest);
 
+  router
+  .route("/:id/friends/checkRequest")
+  .get(tokenModel.isLoggedIn, friendController.hasBeenSentRequesr);
+
 //comment api mapping
 
 router
