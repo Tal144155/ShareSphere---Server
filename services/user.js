@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 const createUser = async (user_name, password, first_name, last_name, pic) => {
   const existingUser = await getUserName(user_name);
@@ -67,11 +69,28 @@ const updateUser = async (user_name, first_name, last_name, pic) => {
       last_name: last_name,
       pic: pic,
     };
-
+    const updateFieldsComment = {
+      first_name: first_name,
+      last_name: last_name,
+      profile: pic,
+    };
     const updatedUser = await User.findOneAndUpdate(
       { user_name: user_name },
       { $set: updateFields },
       { new: true }
+    );
+
+    await Post.updateMany(
+      { user_name: user_name },
+      { $set: updateFieldsComment },
+      { multi: true }
+    );
+    
+    // Update user details in comments
+    await Comment.updateMany(
+      { user_name: user_name },
+      { $set: updateFieldsComment },
+      { multi: true }
     );
 
     if (updatedUser) {
