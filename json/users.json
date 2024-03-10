@@ -1,0 +1,12 @@
+[
+    {
+        "user_name": "talili",
+        "password":"talili",
+        "first_name":"Tal",
+        "last_name":"Ariel Ziv" ,
+        "pic":"/profilepics/talpic.jpg",
+        "friends":[],
+        "friends_requests":[],
+        "posts":[]
+    }
+]
