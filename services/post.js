@@ -1,5 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
+const Comment = require("../models/comment");
+
 const friendService = require("../services/friend");
 
 
@@ -43,10 +45,12 @@ async function removePost(user_name, postId) {
 
 async function deletePost(user_name, postId) {
     try {
-        const post = await Post.findById(postId);
+        const post = await Post.findById(postId).populate('comments');;
         // Make sure the user ia authorised to delete this post
         if (post && post.user_name == user_name) {
             await Post.findOneAndDelete({ _id: postId });
+            const commentIds = post.comments.map(comment => comment._id);
+            await Comment.deleteMany({ _id: { $in: commentIds } });
             return removePost(user_name, postId);
         }
         return false;

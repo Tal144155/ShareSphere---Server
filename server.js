@@ -6,7 +6,8 @@ var server = express();
 
 //using body parser and sending answeres as json
 const bodyParser = require("body-parser");
-server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+server.use(bodyParser.json({ limit: "50mb" }));
 server.use(express.json());
 
 //showing files from public directory
@@ -38,8 +39,8 @@ server.use("/api/posts", posts);
 const users = require("./routes/user");
 server.use("/api/users", users);
 
-const tokensRouter = require('./routes/token')
-server.use('/api/tokens', tokensRouter)
+const tokensRouter = require("./routes/token");
+server.use("/api/tokens", tokensRouter);
 
 //port listening to
 server.listen(process.env.PORT);

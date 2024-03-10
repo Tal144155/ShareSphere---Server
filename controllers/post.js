@@ -29,8 +29,8 @@ async function getPostById(req, res) {
 }
 
 async function editPost(req, res) {
-    const content = req.headers.content;
-    const pic = req.headers.pic;
+    const content = req.body.content;
+    const pic = req.body.pic;
     const updatedPost = await postService.editPost(req.params.id, req.params.pid, content, pic);
     if (updatedPost) {
         return res.status(201).json(updatedPost);

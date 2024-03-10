@@ -20,6 +20,14 @@ router
   .get(tokenModel.isLoggedIn, friendController.getFriends)
   .post(tokenModel.isLoggedIn, friendController.friendRequest);
 
+router
+  .route("/:id/friendsReq")
+  .get(tokenModel.isLoggedIn, friendController.getFriendsRequest);
+
+  router
+  .route("/:id/friends/checkRequest")
+  .get(tokenModel.isLoggedIn, friendController.hasBeenSentRequesr);
+
 //comment api mapping
 
 router
@@ -59,6 +67,9 @@ router
   .delete(tokenModel.isLoggedIn, userController.deleteUser)
   .patch(tokenModel.isLoggedIn, userController.updateUser);
 
-router.route("/").post(userController.createUser);
+router
+  .route("/")
+  .post(userController.createUser)
+  .get(userController.doesExistUserName);
 
 module.exports = router;

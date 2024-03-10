@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 const createUser = async (user_name, password, first_name, last_name, pic) => {
   const existingUser = await getUserName(user_name);
@@ -29,6 +31,7 @@ const getUserByUserName = async (user_name) => {
     first_name: user[0].first_name,
     last_name: user[0].last_name,
     pic: user[0].pic,
+    friend_requests: user[0].friend_requests
   };
   return userToSend;
 };
@@ -52,6 +55,12 @@ const deleteUser = async (user_name) => {
         { friend_requests: deletedUserId },
         { $pull: { friend_requests: deletedUserId } }
       );
+
+      // Delete user's posts
+      await Post.deleteMany({ user_name: userToDelete.user_name });
+
+      // Delete user's comments
+      await Comment.deleteMany({ user_name: userToDelete.user_name });
       return true;
     }
     return false;
@@ -67,11 +76,28 @@ const updateUser = async (user_name, first_name, last_name, pic) => {
       last_name: last_name,
       pic: pic,
     };
-
+    const updateFieldsComment = {
+      first_name: first_name,
+      last_name: last_name,
+      profile: pic,
+    };
     const updatedUser = await User.findOneAndUpdate(
       { user_name: user_name },
       { $set: updateFields },
       { new: true }
+    );
+
+    await Post.updateMany(
+      { user_name: user_name },
+      { $set: updateFieldsComment },
+      { multi: true }
+    );
+    
+    // Update user details in comments
+    await Comment.updateMany(
+      { user_name: user_name },
+      { $set: updateFieldsComment },
+      { multi: true }
     );
 
     if (updatedUser) {
