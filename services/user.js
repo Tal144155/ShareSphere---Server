@@ -55,6 +55,12 @@ const deleteUser = async (user_name) => {
         { friend_requests: deletedUserId },
         { $pull: { friend_requests: deletedUserId } }
       );
+
+      // Delete user's posts
+      await Post.deleteMany({ user_name: userToDelete.user_name });
+
+      // Delete user's comments
+      await Comment.deleteMany({ user_name: userToDelete.user_name });
       return true;
     }
     return false;
