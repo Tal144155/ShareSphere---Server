@@ -15,9 +15,9 @@ const customENV = require("custom-env");
 customENV.env(process.env.NODE_ENV, "./config");
 
 async function collectionExists(collectionName) {
-    const collections = await mongoose.connection.db.listCollections().toArray();
-    return collections.some(collection => collection.name === collectionName);
-  }
+  const collections = await mongoose.connection.db.listCollections().toArray();
+  return collections.some((collection) => collection.name === collectionName);
+}
 
 async function insertDataFromJson() {
   try {
@@ -29,8 +29,12 @@ async function insertDataFromJson() {
     const usersCollectionExists = await collectionExists("users");
     const postsCollectionExists = await collectionExists("posts");
     const commentsCollectionExists = await collectionExists("comments");
-    if(usersCollectionExists || postsCollectionExists || commentsCollectionExists) {
-        return;
+    if (
+      usersCollectionExists ||
+      postsCollectionExists ||
+      commentsCollectionExists
+    ) {
+      return;
     }
     const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
 
@@ -76,12 +80,10 @@ async function insertDataFromJson() {
 
     console.log("Data inserted successfully.");
 
-    
     await mongoose.disconnect();
   } catch (error) {
     console.error("Error inserting data:", error);
   }
 }
-
 
 insertDataFromJson();
