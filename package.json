@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=local && node server.js"
+    "start": "SET NODE_ENV=local && node initDB.js && node server.js"
   },
   "keywords": [],
   "author": "",

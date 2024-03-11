@@ -8,17 +8,32 @@ const base64Img = require("base64-img");
 const jsonFilePath = "./json/users.json";
 const jsonPostPath = "./json/posts.json";
 
+//creating the custom env
+const customENV = require("custom-env");
+
+//connecting to env wanted
+customENV.env(process.env.NODE_ENV, "./config");
+
+async function collectionExists(collectionName) {
+    const collections = await mongoose.connection.db.listCollections().toArray();
+    return collections.some(collection => collection.name === collectionName);
+  }
+
 async function insertDataFromJson() {
   try {
-    // Connect to MongoDB
-    await mongoose.connect("mongodb://localhost:27017", {
+    // Replace here with your own connection string!!!!
+    await mongoose.connect(process.env.CONNECTION_STRING, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    // Read data from JSON file
+    const usersCollectionExists = await collectionExists("users");
+    const postsCollectionExists = await collectionExists("posts");
+    const commentsCollectionExists = await collectionExists("comments");
+    if(usersCollectionExists || postsCollectionExists || commentsCollectionExists) {
+        return;
+    }
     const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
 
-    // update to use insert with user service.
     for (const user of jsonData) {
       const { user_name, password, first_name, last_name, pic } = user;
       const base64EncodedPic = base64Img.base64Sync(pic);
@@ -61,12 +76,12 @@ async function insertDataFromJson() {
 
     console.log("Data inserted successfully.");
 
-    // Close the MongoDB connection
+    
     await mongoose.disconnect();
   } catch (error) {
     console.error("Error inserting data:", error);
   }
 }
 
-// Run the script to insert data
+
 insertDataFromJson();
