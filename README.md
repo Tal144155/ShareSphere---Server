@@ -14,6 +14,18 @@
 - Run the server using **npm start**.
 - Our suggestion is to login with the user: **user name: tal144155, password: tal2024**, even though it does not matter so much.
 
+## About the app:
+
+The name "ShareSpere" is a fusion of two key concepts: "Share" and "Sphere," each contributing to the essence of our social media platform.
+
+### Share
+
+At ShareSpere, sharing lies at the heart of our community. Whether it's sharing moments, ideas, or experiences, our platform is designed to facilitate seamless sharing among users. Connect with friends, family, and the world by effortlessly exchanging content in an inclusive and engaging environment.
+
+### Sphere
+
+The term "Sphere" brings the idea of a rounded or three-dimensional space. In the context of ShareSpere, it signifies the virtual space where our community thrives. It represents the interconnectedness of our users and the inclusive environment we strive to create.
+
 ## Features and functionality
 - After running the server, tou will be able to serve our site (with the domain you chose) or apllication (in android).
 - After logging in, you will see your **Feed page**. In this page you will be able to see the most recent posts on ShareSphere, give each post a like (they deserve it!), comment and share.
