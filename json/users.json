@@ -1,12 +1,52 @@
 [
-    {
-        "user_name": "talili",
-        "password":"talili",
-        "first_name":"Tal",
-        "last_name":"Ariel Ziv" ,
-        "pic":"/profilepics/talpic.jpg",
-        "friends":[],
-        "friends_requests":[],
-        "posts":[]
-    }
+        {
+            "user_name": "tal144155",
+            "password":"tal2024",
+            "first_name":"Tal",
+            "last_name":"Ariel Ziv" ,
+            "pic":"public/profilepics/talpic.jpg"
+        },
+        {
+            "user_name": "yael2023",
+            "password":"yael1234",
+            "first_name":"Yael",
+            "last_name":"Dahari" ,
+            "pic":"public/profilepics/yaelpic.jpg"
+         },
+         {
+            "user_name": "arnon1234",
+            "password":"arnon1234",
+            "first_name":"Arnon",
+            "last_name":"Lutsky" ,
+            "pic":"public/profilepics/arnonpic.jpg"
+        },
+        {
+            "user_name": "eden1234",
+            "password":"eden1234",
+            "first_name":"Eden",
+            "last_name":"Oren" ,
+            "pic":"public/profilepics/edenpic.jpg"
+        },
+        {
+            "user_name": "omri1234",
+            "password":"omri1234",
+            "first_name":"Omri",
+            "last_name":"Cohen" ,
+            "pic":"public/profilepics/omripic.jpg"
+        },
+        {
+            "user_name": "noy12345",
+            "password":"noy12345",
+            "first_name":"Noy",
+            "last_name":"Shani" ,
+            "pic":"public/profilepics/noypic.jpg"
+        }, 
+        {
+            "user_name": "ilanit1234",
+            "password":"ilanit1234",
+            "first_name":"Ilanit",
+            "last_name":"Berdit" ,
+            "pic":"public/profilepics/ilanitpic.jpg"
+        }
+    
 ]
