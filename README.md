@@ -15,7 +15,8 @@
 
 - Open MongoDB on your computer.
 
-- Before you run the server, please run the following command in terminal: **node initDB.js**. This will **initialize the database** with: 7 default users, 25 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.".
+//maybe need to write only check you dont have these tables
+- Before you run the server, please run the following command in terminal: **node initDB.js**. **Please check you don't have other databases named: users, posts, comment**. This command will **initialize the database** with: 7 default users, 25 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.".
 
 - Run the server using **npm start**.
 
