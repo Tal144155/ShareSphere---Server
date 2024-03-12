@@ -1,0 +1,188 @@
+[
+    {
+        "user_name": "tal144155",
+        "first_name":"Tal",
+        "last_name":"Ariel Ziv",
+        "profile":"public/profilepics/talpic.jpg",
+        "content" : "Wanderlust vibes! Share your favorite travel destination and why it holds a special place in your heart. #TravelGoals #AdventureAwaits 🌍✈️",
+        "pic" : "public/postpics/postpic1.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"yael2023",
+            "first_name":"Yael",
+            "last_name":"Dahari",
+            "profile" : "public/profilepics/yaelpic.jpg",
+            "content" :"Travel goals! Have you tried the local cuisine there? I heard it's amazing! 🍜🌮"}, 
+            {
+            "user_name":"eden1234",
+            "first_name":"Eden",
+            "last_name":"Oren",
+            "profile" : "public/profilepics/edenpic.jpg",
+            "content" :"That view is breathtaking! Can't wait to add Zanzibar to my travel bucket list. Thanks for sharing! 🗺️🏞️"}
+        ]
+    },
+    {
+        "user_name": "yael2023",
+        "first_name":"Yael",
+        "last_name":"Dahari",
+        "profile":"public/profilepics/yaelpic.jpg",
+        "content" :  "Foodie alert! What's the last dish that made your taste buds dance? Share your culinary adventures with us! #FoodieFaves #NomNom 🍜🍲",
+        "pic" : "public/postpics/postpic2.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"tal144155",
+            "first_name":"Tal",
+            "last_name":"Ariel Ziv",
+            "profile" : "public/profilepics/talpic.jpg",
+            "content" :"That dish looks incredible! Recipe, please? I need to recreate this at home. 👩‍🍳📸"}
+        ]
+    },
+    {
+        "user_name": "arnon1234",
+        "first_name":"Arnon",
+        "last_name":"Lutsky",
+        "profile":"public/profilepics/arnonpic.jpg",
+        "content" :   "Bookworm alert! Just finished a captivating novel. Any book recommendations to add to my reading list? #BookNerd #ReadingRecommendations 📚📖",
+        "pic" : "public/postpics/postpic3.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"omri1234",
+            "first_name":"Omri",
+            "last_name":"Cohen",
+            "profile" : "public/profilepics/omripic.jpg",
+            "content" :"I'm always on the lookout for a good book! What's the title, and what drew you to it? 📚🤔"}
+        ]
+    },
+    {
+        "user_name": "eden1234",
+        "first_name":"Eden",
+        "last_name":"Oren",
+        "profile":"public/profilepics/edenpic.jpg",
+        "content" :   "Sweat is just your fat crying, right? Crushing the workout game today. What's your favorite exercise that makes you feel unstoppable? #FitLife #WorkoutMotivation 💪🏋️‍♀️ ",
+        "pic" : "public/postpics/postpic4.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"noy12345",
+            "first_name":"Noy",
+            "last_name":"Shani",
+            "profile" : "public/profilepics/noypic.jpg",
+            "content" :"You're killing it in the fitness game! What's your go-to workout routine? 💪🏋️‍♀️"}
+        ]
+    },
+    {
+        "user_name": "omri1234",
+        "first_name":"Omri",
+        "last_name":"Cohen",
+        "profile":"public/profilepics/omripic.jpg",
+        "content" :   "Fur baby appreciation post! My pet's antics never fail to bring a smile. What's your pet's most endearing quality? #PetLove #FurFamily 🐾🐶",
+        "pic" : "public/postpics/postpic5.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"ilanit1234",
+            "first_name":"Ilanit",
+            "last_name":"Berdit",
+            "profile" : "public/profilepics/ilanitpic.jpg",
+            "content" :"Aww, your pet is adorable! What's their name, and do they have any funny quirks? 🐾❤️"}
+        ]
+    },
+    {
+        "user_name": "noy12345",
+        "first_name":"Noy",
+        "last_name":"Shani",
+        "profile":"public/profilepics/noypic.jpg",
+        "content" :  "Crafting corner update! Working on a new DIY project. Any creative souls here? Share your latest handmade masterpiece! #DIYInspiration #CraftyHands ✂️🎨",
+        "pic" : "public/postpics/postpic6.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"eden1234",
+            "first_name":"Eden",
+            "last_name":"Oren",
+            "profile" : "public/profilepics/edenpic.jpg",
+            "content" :"Impressed by your DIY skills! 🌈 What's your favorite part of the creative process? #DIYInspiration"}
+        ]
+    },
+    {
+        "user_name": "ilanit1234",
+        "first_name":"Ilanit",
+        "last_name":"Berdit",
+        "profile":"public/profilepics/ilanitpic.jpg",
+        "content" :  "Tech wonders never cease! Discovered a cool app that's a game-changer. Any recent tech finds blowing your mind? #TechDiscoveries #GadgetMagic 📱💻",
+        "pic" : "public/postpics/postpic7.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"yael2023",
+            "first_name":"Yael",
+            "last_name":"Dahari",
+            "profile" : "public/profilepics/yaelpic.jpg",
+            "content" :"Tech goals unlocked! 🔓 Your discoveries always impress. Any upcoming tech trends you're excited about? 🌐🔍 #TechTalk"}
+        ]
+    },
+    {
+        "user_name": "tal144155",
+        "first_name":"Tal",
+        "last_name":"Ariel Ziv",
+        "profile":"public/profilepics/talpic.jpg",
+        "content" :  "Mindfulness moments: Taking a break to recharge. What's your favorite way to unwind and practice self-care? #WellnessWednesday #MindfulMoments 🌿🧘‍♂️",
+        "pic" : "public/postpics/postpic8.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"omri1234",
+            "first_name":"Omri",
+            "last_name":"Cohen",
+            "profile" : "public/profilepics/omripic.jpg",
+            "content" :"Your dedication to self-care is contagious! 💆‍♀️✨ #WellnessGoals #MindBodyBalance"}
+        ]
+    },
+    {
+        "user_name": "yael2023",
+        "first_name":"Yael",
+        "last_name":"Dahari",
+        "profile":"public/profilepics/yaelpic.jpg",
+        "content" :  "Spreading kindness vibes! Witnessed a heartwarming act today. Ever experienced a random act of kindness that made your day? #KindnessStories #SpreadLove 🤗❤️",
+        "pic" : "public/postpics/postpic9.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"noy12345",
+            "first_name":"Noy",
+            "last_name":"Shani",
+            "profile" : "public/profilepics/noypic.jpg",
+            "content" :"Your kindness story just made my day! 🌟💖 #SpreadLove #KindnessMatters"}
+        ]
+    },
+    {
+        "user_name": "arnon1234",
+        "first_name":"Arnon",
+        "last_name":"Lutsky",
+        "profile":"public/profilepics/arnonpic.jpg",
+        "content" :  "Futuristic finds alert! What's the latest invention that blew your mind? Share the innovation that has you excited about the future. #InnovationSpotlight #TechAdvancements 🚀💡",
+        "pic" : "public/postpics/postpic10.jpg",
+        "likes" : 0,
+        "liked_by": [],
+        "comments" : [
+            {
+            "user_name":"ilanit1234",
+            "first_name":"Ilanit",
+            "last_name":"Berdit",
+            "profile" : "public/profilepics/ilanitpic.jpg",
+            "content" :"Mind officially blown! 🤯 The world of innovation never ceases to amaze me #TechWonders #InnovationInspiration"}
+        ]
+    }
+]

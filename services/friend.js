@@ -59,7 +59,7 @@ function isFriend(user, friend_id) {
 
 // Search for the friend user name in the friends array of the user
 function populatedIsFriend(user, friend_user_name) {
-  const friendIndex = user.friends.findIndex(user_name => user_name === friend_user_name);
+  const friendIndex = user.friends.findIndex(user_name => user_name.user_name === friend_user_name);
   return friendIndex !== -1
 }
 

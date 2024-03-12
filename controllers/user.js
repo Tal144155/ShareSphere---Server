@@ -29,7 +29,7 @@ const getUser = async (req, res) => {
   if (user == null) {
     return res.status(404).json({ error: "User not found" });
   }
-  res.json(user);
+  return res.status(200).json(user);
 };
 
 const deleteUser = async (req, res) => {
