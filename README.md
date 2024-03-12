@@ -1,5 +1,7 @@
 # ShareSphere Server
 
+**🌟 Welcome to ShareSphere Server!**
+
 ![logopic](./public/logopic.png)
 
 **The Share Sphere App is a social media platform that allows users to share posts and interact with each other. This README file provides an overview of the websites's features and functionalities.**
@@ -20,7 +22,8 @@
 
 - Run the server using **npm start**.
 
-- Our suggestion is to login with the user: **user name: tal144155, password: tal2024**, even though it does not matter so much.
+- **🚀 Pro Tip:** Log in with the user tal144155 (Password: tal2024) for an optimal experience, though any account will do.
+
 
 ## About the app:
 
@@ -51,7 +54,7 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 
 - **please notice:** when you enter another users profile page, if you are not friends, you will be able to send him a friend request but you will not be able to his posts. only when you are friends, you can see his posts **and his friends** in the profile page.
 
-# Pictures from the website:
+# 📸 Pictures from the website:
 
 ## Login page:
 ![login](./public/ReadmePics/login.jpg)
