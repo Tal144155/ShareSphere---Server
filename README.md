@@ -22,6 +22,8 @@
 
 - Run the server using **npm start**.
 
+- In order to get to the web application, please open your browser and search for: "http://localhost:**Port number chosen in config**/".
+
 - **🚀 Pro Tip:** Log in with the user tal144155 (Password: tal2024) for an optimal experience, though any account will do.
 
 
