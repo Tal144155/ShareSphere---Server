@@ -22,7 +22,7 @@
 
 - Run the server using **npm start**.
 
-- In order to get to the web application, please open your browser and search for: "http://localhost:**Port number chosen in config**/".
+- In order to get to the web application, please open your browser and search for: "http://localhost:Port number chosen in config/".
 
 - **🚀 Pro Tip:** Log in with the user tal144155 (Password: tal2024) for an optimal experience, though any account will do.
 
@@ -78,3 +78,5 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 
 ## Profile page (other user)
 ![profile](./public/ReadmePics/profile.jpg)
+
+## 🌟 Dive into ShareSphere and start sharing your world! If you have any questions, feel free to reach out. Happy Sharing!
