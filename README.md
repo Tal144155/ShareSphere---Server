@@ -11,12 +11,12 @@
 
 - Install dependencies (for running the app) using **npm install**.
 
-- Create config file containing: the port you would like to run on, the domain of the website and the MongoDB connection string.
+- Create config file containing: the port you would like to run on and the MongoDB connection string.
 
 - Open MongoDB on your computer.
 
-//maybe need to write only check you dont have these tables
-- Before you run the server, please run the following command in terminal: **node initDB.js**. **Please check you don't have other databases named: users, posts, comment**. This command will **initialize the database** with: 7 default users, 25 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.".
+
+- **Please notice:** The first time you will run the server, a JavaScript script will run and initialize the DataBase. it will be initialized with: 7 default users, 25 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.". **Please check you don't have other *collections* named: users, posts, comment**.
 
 - Run the server using **npm start**.
 
@@ -36,10 +36,40 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 
 ## Features and functionality
 - After running the server, tou will be able to serve our site (with the domain you chose) or apllication (in android).
+
 - After logging in, you will see your **Feed page**. In this page you will be able to see the most recent posts on ShareSphere, give each post a like (they deserve it!), comment and share.
+
 - On the feed page you will be able to add a new post (please notice a post must contain text and image).
+
 - When pressing your profile pic or name on the left-bar you will be redirected to your personal page.
+
 - On your personal page you can see your own posts, edit\delete them, add comments and view your own friends.
+
 - Also, in you profile page you can edit your own details, or delete your account.
+
 - When pressing another users picture\name in the post, you will be redirected to his personal page.
+
 - **please notice:** when you enter another users profile page, if you are not friends, you will be able to send him a friend request but you will not be able to his posts. only when you are friends, you can see his posts **and his friends** in the profile page.
+
+# Pictures from the website:
+
+## Login page:
+![login](./public/ReadmePics/login.jpg)
+
+## SignUp page:
+![signup](./public/ReadmePics/signup.jpg)
+
+## Feed page:
+![feed](./public/ReadmePics/feed.jpg)
+
+## Approving friends request
+![friend](./public/ReadmePics/friend.jpg)
+
+## Creating new profile
+![post](./public/ReadmePics/post.jpg)
+
+## Profile page (personal page)
+![personal](./public/ReadmePics/personal.jpg)
+
+## Profile page (other user)
+![profile](./public/ReadmePics/profile.jpg)
