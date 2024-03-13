@@ -67,6 +67,9 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 ## Feed page:
 ![feed](./public/ReadmePics/feed.jpg)
 
+## Feed page (dark mode):
+![feeddark](./public/ReadmePics/feeddark.jpg)
+
 ## Approving friends request
 ![friend](./public/ReadmePics/friend.jpg)
 
@@ -79,4 +82,14 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 ## Profile page (other user)
 ![profile](./public/ReadmePics/profile.jpg)
 
+# 📸 Pictures from the app:
+
+## Login:
+![login](./public/ReadmePics/loginphone.jpg)
+
+## Login (dark mode):
+![logindark](./public/ReadmePics/logindark.jpg)
+
+## SignUp:
+![signup](./public/ReadmePics/signupphone.jpg)
 ## 🌟 Dive into ShareSphere and start sharing your world! If you have any questions, feel free to reach out. Happy Sharing!
