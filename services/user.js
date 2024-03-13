@@ -81,6 +81,7 @@ const updateUser = async (user_name, first_name, last_name, pic) => {
       last_name: last_name,
       profile: pic,
     };
+    //updating user in: comments, posts, and user
     const updatedUser = await User.findOneAndUpdate(
       { user_name: user_name },
       { $set: updateFields },

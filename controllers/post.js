@@ -1,6 +1,7 @@
 const { estimatedDocumentCount } = require('../models/user');
 const postService = require('../services/post');
 
+//creating a new post
 async function createPost(req, res) {
     const newPost = await postService.createPost(
         req.body.user_name,
@@ -18,6 +19,7 @@ async function createPost(req, res) {
     }
 }
 
+//getting post with a certian id
 async function getPostById(req, res) {
     const postId = req.headers.postId;
     const post = await postService.getPostById(postId);
@@ -28,6 +30,7 @@ async function getPostById(req, res) {
     }
 }
 
+//editing a post
 async function editPost(req, res) {
     const content = req.body.content;
     const pic = req.body.pic;
@@ -39,6 +42,7 @@ async function editPost(req, res) {
     }
 }
 
+//deleting post with id
 async function deletePost(req, res) {
     const hasWorked = await postService.deletePost(req.params.id, req.params.pid);
     if (hasWorked) {
@@ -48,6 +52,7 @@ async function deletePost(req, res) {
     }
 }
 
+//getting all posts of a user
 async function getUserPosts(req, res) {
     const req_user = req.headers.username;
     const user_name = req.params.id;
@@ -59,6 +64,7 @@ async function getUserPosts(req, res) {
     }
 }
 
+//getting all posts in feed
 async function getFeed(req, res) {
     const user_name = req.headers.username;
     const feed = await postService.getFeed(user_name);
