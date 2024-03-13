@@ -18,7 +18,7 @@
 - Open MongoDB on your computer.
 
 
-- **Please notice:** The first time you will run the server, a JavaScript script will run and initialize the DataBase. it will be initialized with: 7 default users, 25 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.". **Please check you don't have other *collections* named: users, posts, comment**.
+- **Please notice:** The first time you will run the server, a JavaScript script will run and initialize the DataBase. it will be initialized with: 7 default users, 10 posts from the diffrent users and comments. When the process is done, you will see in the termianl "Data inserted successfully.". **Please check you don't have other *collections* named: users, posts, comments**.
 
 - Run the server using **npm start**.
 
