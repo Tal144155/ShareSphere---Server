@@ -35,6 +35,7 @@ async function insertDataFromJson() {
       commentsCollectionExists
     ) {
       await mongoose.disconnect();
+      console.log("Data already inserted. Strating server.");
       return;
     }
     const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));

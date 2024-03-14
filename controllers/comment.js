@@ -1,6 +1,7 @@
 const commentService = require("../services/comment");
 const userService = require("../services/user");
 
+//creating comment got from the user
 const createComment = async (req, res) => {
   const user = await userService.getUserByUserName(req.params.id);
   const commentSaved = commentService.createComment(
@@ -18,6 +19,7 @@ const createComment = async (req, res) => {
   }
 };
 
+//getting comments of a certian post
 const getComments = async (req, res) => {
   const postId = req.params.pid;
   const commentsArray = await commentService.getComments(postId);
@@ -27,6 +29,7 @@ const getComments = async (req, res) => {
   res.json(commentsArray);
 };
 
+//editing a specific comment
 const editComment = async (req, res) => {
   const user_name = req.params.id;
   const comment_id = req.params.cid;
@@ -50,6 +53,7 @@ const editComment = async (req, res) => {
   }
 };
 
+//deleting a comment
 const deleteComment = async (req, res) => {
   const user_name = req.params.id;
   const comment_id = req.params.cid;

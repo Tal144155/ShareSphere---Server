@@ -2,6 +2,7 @@ const Post = require("../models/post");
 const postService = require("./post");
 const userService = require("./user");
 
+//check if the user liked the chosen post
 const isLiked = async (user_name, pid) => {
   try {
     const post = await postService.getPostByPostId(pid);
@@ -14,11 +15,13 @@ const isLiked = async (user_name, pid) => {
   }
 };
 
+//if the user liked the post, unlike
 const like = async (user_name, pid) => {
   try {
     const didlike = await isLiked(user_name, pid);
 
     if (didlike) {
+      //update like num and liked by array
       const user = await userService.getUserName(user_name);
       const user_id = user[0]._id;
       const post = await postService.getPostByPostId(pid);

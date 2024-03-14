@@ -50,7 +50,10 @@ const hasBeenSentRequesr = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     // Check if the friend request exists
-    const hasSentRequest = friendService.isRequested(userId[0], userToCheck[0]._id);
+    const hasSentRequest = friendService.isRequested(
+      userId[0],
+      userToCheck[0]._id
+    );
     res.status(200).json({ answer: hasSentRequest });
   } catch (error) {
     console.error("Error in hasBeenSentRequesr:", error);

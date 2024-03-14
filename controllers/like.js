@@ -1,5 +1,6 @@
 const likeService = require("../services/like");
 
+//if the user liked the post, return true. else, return false
 const isLiked = async (req, res) => {
   const user_name = req.params.id;
   const pid = req.params.pid;
@@ -11,6 +12,7 @@ const isLiked = async (req, res) => {
   }
 };
 
+//if the user liked, unlike and vice versa
 const like = async (req, res) => {
   const user_name = req.params.id;
   const pid = req.params.pid;

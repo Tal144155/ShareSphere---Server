@@ -42,5 +42,9 @@ server.use("/api/users", users);
 const tokensRouter = require("./routes/token");
 server.use("/api/tokens", tokensRouter);
 
+server.get("*", (req, res) => {
+  res.redirect("/");
+});
+
 //port listening to
 server.listen(process.env.PORT);

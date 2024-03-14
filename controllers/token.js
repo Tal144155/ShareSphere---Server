@@ -1,6 +1,7 @@
 const userService = require('../services/user.js')
 const tokenModel = require('../models/token.js')
 
+//check if the login was succesful
 async function processLogin(req, res) {
     const user_name = req.body.username
     const password = req.body.password
