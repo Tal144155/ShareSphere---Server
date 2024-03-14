@@ -133,7 +133,7 @@ async function getUserPosts(req_user_name, user_name) {
                     comments: post.comments.length,
                     publish_date: post.publish_date,
                   };
-                feed.push(newPost);
+                  posts.push(newPost);
             }
             return posts;
 
