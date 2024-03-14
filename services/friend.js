@@ -57,9 +57,21 @@ function isFriend(user, friend_id) {
   return friendIndex !== -1
 }
 
+async function areFriends(user_name_1, user_name_2) {
+  try {
+    const user = await User.findOne({ user_name: user_name_1 });
+    if (!user)
+      return false;
+    await user.populate('friends');
+    return populatedIsFriend(user, user_name_2);
+  } catch (error) {
+    return false;
+  }
+}
+
 // Search for the friend user name in the friends array of the user
 function populatedIsFriend(user, friend_user_name) {
-  const friendIndex = user.friends.findIndex(user_name => user_name.user_name === friend_user_name);
+  const friendIndex = user.friends.findIndex(user => user.user_name === friend_user_name);
   return friendIndex !== -1
 }
 
@@ -70,5 +82,5 @@ function isRequested(user, friend_id) {
 }
 
 module.exports = {
-  removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, populatedIsFriend
+  removeRequest, addFriend, getFriends, isFriend, isRequested, deleteFriend, getFriendRequests, populatedIsFriend, areFriends
 }

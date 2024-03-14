@@ -136,6 +136,13 @@ const deleteFriend = async (req, res) => {
   }
 };
 
+const areFriends = async (req, res) => {
+  const user_name_1 = req.params.id;
+  const user_name_2 = req.params.fid;
+  const result = await friendService.areFriends(user_name_1, user_name_2);
+  res.json({ message: result });
+}
+
 module.exports = {
   getFriends,
   friendRequest,
@@ -143,4 +150,5 @@ module.exports = {
   deleteFriend,
   getFriendsRequest,
   hasBeenSentRequesr,
+  areFriends
 };

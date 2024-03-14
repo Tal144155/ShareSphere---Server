@@ -12,6 +12,7 @@ const friendController = require("../controllers/friend");
 
 router
   .route("/:id/friends/:fid")
+  .get(tokenModel.isLoggedIn, friendController.areFriends)
   .patch(tokenModel.isLoggedIn, friendController.approveFriendRequest)
   .delete(tokenModel.isLoggedIn, friendController.deleteFriend);
 

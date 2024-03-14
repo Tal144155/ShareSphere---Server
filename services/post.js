@@ -105,18 +105,28 @@ async function getPostById(user, postId) {
 
 async function getUserPosts(req_user_name, user_name) {
     try {
-        const user = await User.findOne({ user_name }).populate('posts'); // Find the user and populate the posts
+        const user = await User.findOne({ user_name }); // Find the user and populate the posts
         if (!user)
             return { code: 404, error: "This user doesn't exist!" };
+
+        await user.populate('posts');
 
         const req_user = await User.findOne({ user_name: req_user_name });
         if (!req_user)
             return { code: 404, error: "This requested user doesn't exist!" };
 
+        let posts = [];
+
         if (req_user_name == user_name || friendService.isFriend(user, req_user._id)) {
             // Sort the posts by publish_date in descending order
-            const sortedPosts = user.posts.sort((a, b) => b.publish_date - a.publish_date);
-            return sortedPosts;
+            const sortedPosts = await Post.find({ user_name }).sort({ publish_date: -1 });
+            for (const post of sortedPosts) {
+                await post.populate('comments');
+                await post.populate('liked_by');
+                posts.push(post);
+            }
+            return posts;
+
         } else {
             return { code: 403, error: "You are not friends with this user!" };
         }
@@ -146,9 +156,13 @@ async function getFeed(user_name) {
         for (const post of posts) {
             // Check if the post is from a friend or the user's himself
             if (countFriends > 0 && (user_name == post.user_name || friendService.populatedIsFriend(user, post.user_name))) {
+                await post.populate('comments');
+                await post.populate('liked_by');
                 feed.push(post);
                 countFriends--;
             } else if (countStrangers > 0) { // Otherwise, check if it's from a stranger
+                await post.populate('comments');
+                await post.populate('liked_by');
                 feed.push(post);
                 countStrangers--;
             }
