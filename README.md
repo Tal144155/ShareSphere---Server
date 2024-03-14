@@ -39,7 +39,7 @@ At ShareSpere, sharing lies at the heart of our community. Whether it's sharing 
 
 The term "Sphere" brings the idea of a rounded or three-dimensional space. In the context of ShareSpere, it signifies the virtual space where our community thrives. It represents the interconnectedness of our users and the inclusive environment we strive to create.
 
-## Features and functionality
+## Features and functionality (website)
 - After running the server, tou will be able to serve our site (with the domain you chose) or apllication (in android).
 
 - After logging in, you will see your **Feed page**. In this page you will be able to see the most recent posts on ShareSphere, give each post a like (they deserve it!), comment and share.
@@ -73,7 +73,7 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 ## Approving friends request
 ![friend](./public/ReadmePics/friend.jpg)
 
-## Creating new profile
+## Creating new post
 ![post](./public/ReadmePics/post.jpg)
 
 ## Profile page (personal page)
@@ -92,4 +92,28 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 
 ## SignUp:
 ![signup](./public/ReadmePics/signupphone.jpg)
+
+## Feed page:
+![feed](./public/ReadmePics/feedapp.jpg)
+
+
+## Approving friends request
+![friend](./public/ReadmePics/friendsreqapp.jpg)
+
+## Watching friends
+![friend](./public/ReadmePics/friendsapp.jpg)
+
+## Profile page (personal page)
+![personal](./public/ReadmePics/profileapp.jpg)
+
+## Creating new post
+![post](./public/ReadmePics/newpostapp.jpg)
+
+## Profile page (after adding post)
+![personal](./public/ReadmePics/newpostwatch.jpg)
+
+## Profile page (other user, not friend)
+![profile](./public/ReadmePics/profileotherapp.jpg)
+
+
 ## 🌟 Dive into ShareSphere and start sharing your world! If you have any questions, feel free to reach out. Happy Sharing!
