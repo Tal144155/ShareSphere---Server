@@ -96,7 +96,6 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 ## Feed page:
 ![feed](./public/ReadmePics/feedapp.jpg)
 
-
 ## Approving friends request
 ![friend](./public/ReadmePics/friendsreqapp.jpg)
 
