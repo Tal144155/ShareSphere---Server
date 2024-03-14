@@ -34,6 +34,7 @@ async function insertDataFromJson() {
       postsCollectionExists ||
       commentsCollectionExists
     ) {
+      await mongoose.disconnect();
       return;
     }
     const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
