@@ -121,9 +121,19 @@ async function getUserPosts(req_user_name, user_name) {
             // Sort the posts by publish_date in descending order
             const sortedPosts = await Post.find({ user_name }).sort({ publish_date: -1 });
             for (const post of sortedPosts) {
-                await post.populate('comments');
-                await post.populate('liked_by');
-                posts.push(post);
+                const newPost = {
+                    _id: post._id,
+                    user_name: post.user_name,
+                    first_name: post.first_name,
+                    last_name: post.last_name,
+                    pic: post.pic,
+                    profile: post.profile,
+                    content: post.content,
+                    likes: post.likes,
+                    comments: post.comments.length,
+                    publish_date: post.publish_date,
+                  };
+                feed.push(newPost);
             }
             return posts;
 
@@ -156,14 +166,34 @@ async function getFeed(user_name) {
         for (const post of posts) {
             // Check if the post is from a friend or the user's himself
             if (countFriends > 0 && (user_name == post.user_name || friendService.populatedIsFriend(user, post.user_name))) {
-                await post.populate('comments');
-                await post.populate('liked_by');
-                feed.push(post);
+                const newPost = {
+                    _id: post._id,
+                    user_name: post.user_name,
+                    first_name: post.first_name,
+                    last_name: post.last_name,
+                    pic: post.pic,
+                    profile: post.profile,
+                    content: post.content,
+                    likes: post.likes,
+                    comments: post.comments.length,
+                    publish_date: post.publish_date,
+                  };
+                feed.push(newPost);
                 countFriends--;
             } else if (countStrangers > 0) { // Otherwise, check if it's from a stranger
-                await post.populate('comments');
-                await post.populate('liked_by');
-                feed.push(post);
+                const newPost = {
+                    _id: post._id,
+                    user_name: post.user_name,
+                    first_name: post.first_name,
+                    last_name: post.last_name,
+                    pic: post.pic,
+                    profile: post.profile,
+                    content: post.content,
+                    likes: post.likes,
+                    comments: post.comments.length,
+                    publish_date: post.publish_date,
+                  };
+                feed.push(newPost);
                 countStrangers--;
             }
             // If both counters are 0, break the loop
