@@ -13,8 +13,18 @@ const getFriends = async (req, res) => {
       // Send an error response with the error code and message
       res.status(friends.code).json({ error: friends.error });
     } else {
+      let friendsArr = [];
+      for (const user of friends) {
+        const new_user = {
+          user_name: user.user_name,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          pic: user.pic,
+        };
+        friendsArr.push(new_user);
+      }
       // Send a success response with the friends array and status code 200
-      res.status(200).json(friends);
+      res.status(200).json(friendsArr);
     }
   } catch (error) {
     // Handle any unexpected errors and send a 500 response
@@ -59,8 +69,18 @@ const getFriendsRequest = async (req, res) => {
       // Send an error response with the error code and message
       res.status(404).json({ error: "user not found" });
     } else {
+      let friendsArr = [];
+      for (const user of friends) {
+        const new_user = {
+          user_name: user.user_name,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          pic: user.pic,
+        };
+        friendsArr.push(new_user);
+      }
       // Send a success response with the friends array and status code 200
-      res.status(200).json(friends);
+      res.status(200).json(friendsArr);
     }
   } catch (error) {
     // Handle any unexpected errors and send a 500 response
@@ -113,6 +133,13 @@ const deleteFriend = async (req, res) => {
   }
 };
 
+const areFriends = async (req, res) => {
+  const user_name_1 = req.params.id;
+  const user_name_2 = req.params.fid;
+  const result = await friendService.areFriends(user_name_1, user_name_2);
+  res.json({ message: result });
+}
+
 module.exports = {
   getFriends,
   friendRequest,
@@ -120,4 +147,5 @@ module.exports = {
   deleteFriend,
   getFriendsRequest,
   hasBeenSentRequesr,
+  areFriends
 };

@@ -31,7 +31,6 @@ const getUserByUserName = async (user_name) => {
     first_name: user[0].first_name,
     last_name: user[0].last_name,
     pic: user[0].pic,
-    friend_requests: user[0].friend_requests
   };
   return userToSend;
 };
