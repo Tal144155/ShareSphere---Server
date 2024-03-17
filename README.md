@@ -54,6 +54,8 @@ The term "Sphere" brings the idea of a rounded or three-dimensional space. In th
 
 - When pressing another users picture\name in the post, you will be redirected to his personal page.
 
+- **Bonus Feature:** The server and React components includes the option to add comments to posts. Each comment is attributed to its respective user, who possesses the ability to edit or delete their comments. A dedicated API exists for this interactions. **Please note** that this feature is not currently available on the Android app, so refrain from pressing the comment button.
+
 - **please notice:** when you enter another users profile page, if you are not friends, you will be able to send him a friend request but you will not be able to his posts. only when you are friends, you can see his posts **and his friends** in the profile page.
 
 # 📸 Pictures from the website:
