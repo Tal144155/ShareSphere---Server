@@ -24,6 +24,8 @@
 
 - In order to get to the web application, please open your browser and search for: "http://localhost:Port number chosen in config/".
 
+- In order to run the app, go to the app's github repository, enter the **Production Branch**. All the inforamtion needed is there, and the new version of the app (the main branch includes the second part od the project).
+
 - **🚀 Pro Tip:** Log in with the user tal144155 (Password: tal2024) for an optimal experience, though any account will do.
 
 
