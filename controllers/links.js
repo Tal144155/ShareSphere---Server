@@ -10,7 +10,7 @@ const checkListUrl = async (req, res) => {
   let isBadFound = false;
   const client = new net.Socket();
 
-  client.connect(5555, "192.168.174.129", () => {
+  client.connect(process.env.TCP_SERVER_PORT, process.env.TCP_SERVER_IP, () => {
     console.log("Connected to TCP server");
     sendUrlsSequentially(ListURL);
   });
@@ -19,7 +19,6 @@ const checkListUrl = async (req, res) => {
     for (let i = 0; i < urls.length; i++) {
       await sendAndReceive(urls[i]);
     }
-
   };
 
   const sendAndReceive = (url) => {
@@ -42,10 +41,10 @@ const checkListUrl = async (req, res) => {
   client.on("end", () => {
     console.log("Disconnected from TCP server");
     if (isBadFound) {
-        res.status(403).json(false);
-      } else {
-        res.status(200).json(true);
-      }
+      res.status(403).json(false);
+    } else {
+      res.status(200).json(true);
+    }
   });
 
   client.on("error", (err) => {
