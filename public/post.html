@@ -296,7 +296,7 @@
       }
 
       async function checkLinks() {
-        let urls = ["boo"];
+        let listurl = ["boo"];
         const reponse = await fetch(
           "http://localhost:8080/api/posts/links",
           {
@@ -305,7 +305,7 @@
               "Content-Type": "application/json",
               Authorization: token,
             },
-            body: JSON.stringify(urls),
+            body: JSON.stringify({listurl: listurl}),
           }
         );
       }

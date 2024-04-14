@@ -13,7 +13,7 @@ const checkListUrl = async (req, res) => {
 
   ListURL.forEach((url) => {
     const client = net.createConnection(
-      { port: 5555, host: "localhost" },
+      { port: 5555, host: "192.168.174.129" },
       () => {
         console.log("Connected to TCP server");
 
