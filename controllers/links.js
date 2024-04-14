@@ -1,6 +1,5 @@
 const net = require("net");
 
-//checking list of links using the bloom filter
 const checkListUrl = async (req, res) => {
   const ListURL = req.body.listurl;
 
@@ -9,37 +8,44 @@ const checkListUrl = async (req, res) => {
   }
 
   let isBadFound = false;
-  let completedRequests = 0;
   const client = new net.Socket();
 
   client.connect(5555, "192.168.174.129", () => {
     console.log("Connected to TCP server");
+    sendUrlsSequentially(ListURL);
   });
 
-  ListURL.forEach((url) => {
-    client.write(`check-url ${url}`);
-  });
-
-  client.on("data", (data) => {
-    console.log(`Received data from TCP server: ${data}`);
-
-    if (data.toString() === "true") {
-      isBadFound = true;
+  const sendUrlsSequentially = async (urls) => {
+    for (let i = 0; i < urls.length; i++) {
+      await sendAndReceive(urls[i]);
     }
 
-    completedRequests++;
+  };
 
-    if (completedRequests === ListURL.length) {
-      if (isBadFound) {
+  const sendAndReceive = (url) => {
+    return new Promise((resolve) => {
+      client.write(`${url}`);
+      console.log("Sending " + url);
+
+      client.once("data", (data) => {
+        console.log(`Received data from TCP server: ${data}`);
+
+        if (data.toString() === "true") {
+          isBadFound = true;
+        }
+
+        resolve();
+      });
+    });
+  };
+
+  client.on("end", () => {
+    console.log("Disconnected from TCP server");
+    if (isBadFound) {
         res.status(403).json(false);
       } else {
         res.status(200).json(true);
       }
-    }
-  });
-
-  client.on("end", () => {
-    console.log("Disconnected from TCP server");
   });
 
   client.on("error", (err) => {
