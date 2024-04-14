@@ -38,6 +38,9 @@
     <button onclick="isLike()">getLikes</button>
     <button onclick="like()">like</button>
 
+    <h1>checking links</h1>
+    <button onclick="checkLinks()">check links</button>
+
     <script>
       let token;
       async function getToken() {
@@ -288,6 +291,21 @@
               "Content-Type": "application/json",
               Authorization: token,
             },
+          }
+        );
+      }
+
+      async function checkLinks() {
+        let urls = ["boo"];
+        const reponse = await fetch(
+          "http://localhost:8080/api/posts/links",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify(urls),
           }
         );
       }
