@@ -41,9 +41,9 @@ const checkListUrl = async (req, res) => {
   client.on("end", () => {
     console.log("Disconnected from TCP server");
     if (isBadFound) {
-      res.status(403).json(false);
+      res.status(403).json({ isValid: false });
     } else {
-      res.status(200).json(true);
+      res.status(200).json({ isValid: true });
     }
   });
 
