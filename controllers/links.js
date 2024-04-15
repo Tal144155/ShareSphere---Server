@@ -19,11 +19,12 @@ const checkListUrl = async (req, res) => {
     for (let i = 0; i < urls.length; i++) {
       await sendAndReceive(urls[i]);
     }
+    sendAndReceive("close");
   };
 
   const sendAndReceive = (url) => {
     return new Promise((resolve) => {
-      client.write(`${url}`);
+      client.write("2 " + `${url}`);
       console.log("Sending " + url);
 
       client.once("data", (data) => {
