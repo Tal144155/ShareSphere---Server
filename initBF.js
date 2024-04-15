@@ -18,15 +18,16 @@ async function addLinks() {
       });
     
       const sendUrlsSequentially = async (urls) => {
+        await sendAndReceive(process.env.BF_SETTINGS);
         for (let i = 0; i < urls.length; i++) {
-          await sendAndReceive(urls[i]);
+          await sendAndReceive("1 " + urls[i]);
         }
-        sendAndReceive("close");
+        await sendAndReceive("close");
       };
 
       const sendAndReceive = (url) => {
         return new Promise((resolve) => {
-          client.write("1 " + `${url}`);
+          client.write(`${url}`);
           console.log("Sending " + url);
     
           client.once("data", (data) => {

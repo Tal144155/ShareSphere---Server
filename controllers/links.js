@@ -17,14 +17,14 @@ const checkListUrl = async (req, res) => {
 
   const sendUrlsSequentially = async (urls) => {
     for (let i = 0; i < urls.length; i++) {
-      await sendAndReceive(urls[i]);
+      await sendAndReceive("2 " + urls[i]);
     }
-    sendAndReceive("close");
+    await sendAndReceive("close");
   };
 
   const sendAndReceive = (url) => {
     return new Promise((resolve) => {
-      client.write("2 " + `${url}`);
+      client.write(`${url}`);
       console.log("Sending " + url);
 
       client.once("data", (data) => {
