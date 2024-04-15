@@ -28,8 +28,7 @@ const checkListUrl = async (req, res) => {
 
       client.once("data", (data) => {
         console.log(`Received data from TCP server: ${data}`);
-
-        if (data.toString() === "true") {
+        if (data[0]==102) {
           isBadFound = true;
         }
 
@@ -41,9 +40,9 @@ const checkListUrl = async (req, res) => {
   client.on("end", () => {
     console.log("Disconnected from TCP server");
     if (isBadFound) {
-      res.status(403).json({ isValid: false });
+      return res.status(403).json({ isValid: false });
     } else {
-      res.status(200).json({ isValid: true });
+      return res.status(200).json({ isValid: true });
     }
   });
 
