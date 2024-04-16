@@ -1,10 +1,17 @@
 const net = require("net");
 
 const checkListUrl = async (req, res) => {
-  const ListURL = req.body.listurl;
+  const input = req.body.content;
 
-  if (!ListURL || !Array.isArray(ListURL)) {
-    return res.status(400).json({ error: "Invalid input" });
+  const httpRegex =
+  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+
+  const matches = input.match(httpRegex);
+
+  const ListURL = matches ? matches : [];
+
+  if (ListURL.length === 0) {
+    return res.status(200).json({ isValid: true });
   }
 
   let isBadFound = false;
@@ -29,7 +36,7 @@ const checkListUrl = async (req, res) => {
 
       client.once("data", (data) => {
         console.log(`Received data from TCP server: ${data}`);
-        if (data[0]==102) {
+        if (data[0] == 102) {
           isBadFound = true;
         }
 
