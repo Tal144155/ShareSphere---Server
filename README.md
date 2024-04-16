@@ -14,6 +14,9 @@
 - Install dependencies (for running the app) using **npm install**.
 
 - Create config file containing: the port you would like to run on and the MongoDB connection string.
+Insert into the .env file the following:
+* CONNECTION_STRING="mongodb://localhost:27017" (replace with your connection string)
+* PORT=8080 (replace with the port you would like to run on)
 
 - Open MongoDB on your computer.
 
