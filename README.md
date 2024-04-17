@@ -16,8 +16,10 @@
 1. Create a new folder inside the server's repository called _config_.
 2. Inside the _"config"_ folder, create the file _.env_.
 3. Add the following content to the _.env_ file:
-> CONNECTION_STRING="mongodb://localhost:27017" (change here to the connection string of your MongoDB)<br />
-> PORT=8080 (replace with the port you would like to run on)<br />
+```
+CONNECTION_STRING="mongodb://localhost:27017" (change here to the connection string of your MongoDB)
+PORT=8080 (replace with the port you would like to run on)
+```
 
 - Open MongoDB on your computer.
 
